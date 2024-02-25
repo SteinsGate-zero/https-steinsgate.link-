@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN">
+
+<head>
+    
+    <title>大佬们的网站渗透思路 - 命运石之门 - 用正确的方法做正确的事</title>
+    <meta charset="UTF-8">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+    
+    
+
+    <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
+    <meta name="description" content="分享有价值的思路">
+<meta property="og:type" content="article">
+<meta property="og:title" content="大佬们的网站渗透思路">
+<meta property="og:url" content="https://steinsgate.link/2016/10/02/20161002/index.html">
+<meta property="og:site_name" content="命运石之门 - 用正确的方法做正确的事">
+<meta property="og:description" content="分享有价值的思路">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2016-10-01T16:00:00.000Z">
+<meta property="article:modified_time" content="2023-03-15T04:19:08.000Z">
+<meta property="article:author" content="哲学系老干部">
+<meta property="article:tag" content="IT：渗透测试">
+<meta property="article:tag" content="IT">
+<meta name="twitter:card" content="summary">
+    
+<link rel="stylesheet" href="/lib/fancybox/fancybox.css">
+<link rel="stylesheet" href="/lib/justifiedGallery/justifiedGallery.min.css">
+<link rel="stylesheet" href="/lib/mdui_043tiny/mdui.css">
+
+
+    <link rel="stylesheet" href="/lib/iconfont/iconfont.css?v=1708854159757">
+    
+    <link rel="stylesheet" href="/css/style.css?v=1708854159757">
+    
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="mdui-drawer-body-left">
+    
+    <div id="nexmoe-background">
+        <div class="nexmoe-bg" style="background-image: url(https://cdn.jsdelivr.net/gh/nexmoe/nexmoe.github.io@latest/images/cover/5c3aec85a4343.jpg)"></div>
+        <div class="mdui-appbar mdui-shadow-0">
+            <div class="mdui-toolbar">
+                <a mdui-drawer="{target: '#drawer', swipe: true}" title="menu" class="mdui-btn mdui-btn-icon mdui-ripple"><i class="mdui-icon nexmoefont icon-menu"></i></a>
+                <div class="mdui-toolbar-spacer"></div>
+                <!--<a href="javascript:;" class="mdui-btn mdui-btn-icon"><i class="mdui-icon material-icons">search</i></a>-->
+                <a href="/" title="哲学系老干部" class="mdui-btn mdui-btn-icon"><img src="http://fp1.fghrsh.net/2020/07/16/b86a8607337c01dfa2b139bc46ca20aa.jpg!q80.webp" alt="哲学系老干部"></a>
+            </div>
+        </div>
+    </div>
+    <div id="nexmoe-header">
+        <div class="nexmoe-drawer mdui-drawer" id="drawer">
+    <div class="nexmoe-avatar mdui-ripple">
+        <a href="/" title="哲学系老干部">
+            <img src="http://fp1.fghrsh.net/2020/07/16/b86a8607337c01dfa2b139bc46ca20aa.jpg!q80.webp" alt="哲学系老干部" alt="哲学系老干部">
+        </a>
+    </div>
+    <div class="nexmoe-count">
+        <div><span>文章</span>16</div>
+        <div><span>标签</span>13</div>
+        <div><span>分类</span>4</div>
+    </div>
+    <div class="nexmoe-list mdui-list" mdui-collapse="{accordion: true}">
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/" title="回到首页">
+            <i class="mdui-list-item-icon nexmoefont icon-home"></i>
+            <div class="mdui-list-item-content">
+                回到首页
+            </div>
+        </a>
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/archives" title="文章归档">
+            <i class="mdui-list-item-icon nexmoefont icon-container"></i>
+            <div class="mdui-list-item-content">
+                文章归档
+            </div>
+        </a>
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/about.html" title="我的故事">
+            <i class="mdui-list-item-icon nexmoefont icon-info-circle"></i>
+            <div class="mdui-list-item-content">
+                我的故事
+            </div>
+        </a>
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/Links.html" title="Links">
+            <i class="mdui-list-item-icon nexmoefont icon-unorderedlist"></i>
+            <div class="mdui-list-item-content">
+                Links
+            </div>
+        </a>
+        
+    </div>
+    <aside id="nexmoe-sidebar">
+    
+    <div class="nexmoe-widget-wrap">
+    <div class="nexmoe-widget nexmoe-search">
+         
+            <form id="search_form" action_e="https://cn.bing.com/search?q=site:steinsgate.link" onsubmit="return search();">
+                <label><input id="search_value" name="q" type="search" placeholder="搜索"></label>
+            </form>
+         
+    </div>
+</div>
+    
+    <div class="nexmoe-widget-wrap">
+    <div class="nexmoe-widget nexmoe-social">
+        <a class="mdui-ripple" href="https://space.bilibili.com/3028377" target="_blank" mdui-tooltip="{content: '哔哩哔哩'}" style="color: rgb(231, 106, 141);background-color: rgba(231, 106, 141, .15);">
+            <i class="nexmoefont icon-bilibili"></i>
+        </a><a class="mdui-ripple" href="https://github.com/SteinsGate-zero" target="_blank" mdui-tooltip="{content: 'GitHub'}" style="color: rgb(25, 23, 23);background-color: rgba(25, 23, 23, .15);">
+            <i class="nexmoefont icon-github"></i>
+        </a>
+    </div>
+</div>
+    
+</aside>
+    <div class="nexmoe-copyright">
+        &copy; 2024 哲学系老干部
+        Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+        & <a href="https://github.com/theme-nexmoe/hexo-theme-nexmoe" target="_blank">Nexmoe</a>
+        
+    </div>
+</div><!-- .nexmoe-drawer -->
+    </div>
+    <div id="nexmoe-content">
+        <div class="nexmoe-primary">
+            <div class="nexmoe-post">
+
+  <article>
+      
+          <div class="nexmoe-post-cover" style="padding-bottom: 42.8125%;"> 
+              <img src="https://fp1.fghrsh.net/2019/11/13/ff9b70c57942eaa3a306705c6567d0e4.jpg!q80.webp" alt="大佬们的网站渗透思路" loading="lazy">
+              <h1>大佬们的网站渗透思路</h1>
+          </div>
+      
+      
+      <div class="nexmoe-post-meta nexmoe-rainbow" style="margin:10px 0!important;">
+    <a><i class="nexmoefont icon-calendar-fill"></i>2016年10月02日</a>
+</div>
+
+      <div class="nexmoe-post-meta nexmoe-rainbow" style="margin:10px 0!important;">
+    
+        <a><i class="nexmoefont icon-areachart"></i>约2.5k字</a>
+        <a><i class="nexmoefont icon-time-circle-fill"></i>预计需要9分钟</a>
+    
+</div>
+
+      <p>分享有价值的思路<span id="more"></span></p>
+<h2 id="OldJun总结"><a href="#OldJun总结" class="headerlink" title="OldJun总结"></a>OldJun总结</h2><p>1.无论什么站，无论什么语言，我要渗透，第一件事就是扫目录，最好一下扫出个上传点，直接上传shell，诸位不要笑，有时候你花很久搞一个站，最后发现有个现成的上传点，而且很容易猜到，不过这种情况发生在asp居多！</p>
+<p>2.asp（aspx）+MSSQL先考虑注入，一般的注入都有DBowner权限可以直接写shell；如果写不了，或者web与数据库分离，那就猜数据，从后台下手了，后台可以上传或者改配置文件；</p>
+<p>3.asp（aspx）+ACCESS拿shell一般只有3种方法，一是前台上传或者注入进后台上传；二是注入进后台改配置文件；三是注入进后台备份数据库或者暴库后知道是asp或者asa数据库于是直接写一句话；</p>
+<p>4.php+MYSQL 一般是注入进后台上传，偶尔运气好些权限够高可以注入select into outfile；然后包含，分本地与远程，远程包含在高版本php是不支持的，于是想办法本地上传图片文件或者写到log里；然后php程序某某未公开的 漏洞，运气好可以直接写shell。</p>
+<p>者写到log里；然后php程序某某未公开的 漏洞，运气好可以直接写shell。</p>
+<p>5.jsp+MYSQL利用数据库拿权限方面基本同php，而且jsp的上传基本很少检查文件后缀，于是只要有注入点与后台，拿shell相当的容易。jsp+ORACLE的站我碰到的不多，碰到的也是猜出用户名与密码从后台下手的。</p>
+<p>6.无论什么大站，主站一般都很安全（不然早被人玩了），于是一般从二级域名下手，猜出主站的某些用户名与密码或者搞到主站的源代码，或者旁注得到同网段服务器后cain或arp。</p>
+<p>7.一般的大站很少有用现成的CMS的，于是如果你有幸找到源码，那你就发了，注入漏洞啊，上传漏洞啊，写文件漏洞啊，都掌握在你手里。多看看那些大站新出来的测试分站点，那些站还在测试中，可以很轻松拿下。</p>
+<p>8.上传有个文件名截断，这包括2个方面，一是00截断，二是长文件名截断（曾经利用这个搞下hw）；然后很多写文件的地方，都可以00，屡试不爽。上传别忘了.asp（当然.asa，.cer，.cdx都可以啦）目录的妙用。</p>
+<p>9.php 站无论windows还是linux，都有magic_quotes_gpc的问题，magic_quotes_gpc为on的时候，在server变量 注入的时候还是可以select into outfile，今年我搞过某未开源cms就是这个情况，一般情况下为on就别考虑写文件了，不过有这个权限别忘了读文件源码，因为load_file的 参数是可以编码的。</p>
+<p>10.猜路径或者文件在**中非常必要，猜不到路径的时候别忘了google（baidu太烂，google很全），于是你可以考虑看站点下的robot.txt或者robots.txt，会有惊喜。</p>
+<p>11.工具的使用很重要，入侵之前用WVS扫扫会有助入侵；注入工具虽然很多，但不见得都好使，现在的软硬防火墙、防注入越来越厉害，那时候你就别偷懒，多手工有助你成长。</p>
+<p>12.遇到过一流监控么，遇到其他防post的防火墙么，有时候一句话进去了都无法传大马，那时候，你先学学编码，学学变换绕过。</p>
+<p>13.想搞一般的小站，记得查看这个小站的版权，找做这个站的公司，然后从这个公司做的其他站下手，得到源码再回头搞，我曾经通过这个方法拿下某知名制药的公司站。</p>
+<p>14.旁注的思路永远不过时，遇到dbowner的注入，可以很舒服写shell到你需要的站，省得麻烦的提权了；运气不好，按部就班拿shell提权得到你所需。</p>
+<p>15.永远别忘记社会工程学，利用社工把自己当成一个什么也不会的人，从某某站长的qq，身份证，邮箱等等下手，也许有时可能会有意外；另外别忘记admin,admin；test,test；123456,123456这种简单的尝试，当然，你也可以暴力破解。</p>
+<p>16.别忽视XSS，别忽视cookie，XSS可以偷cookie，更有若干妙用，自己学会领悟；cookie可以伪造登陆，cookie可以注入，cookie注入可以绕绝大多数的防火墙。</p>
+<p>17.平时搞站多多搜集路径啊，源码啊，工具啊，充实自己的“武器”库；最好把自己的入侵步骤记录下来，或者事后反思下，我一般都是记在txt里，另外要做到举一反三。</p>
+<p>18.多学习，多看源码，多看公布出来的0day，脚本是入侵的前提，而不是工具，会用工具会装B你还没入门。</p>
+<h2 id="XXbing总结"><a href="#XXbing总结" class="headerlink" title="XXbing总结:"></a>XXbing总结:</h2><p>目标：www.***.com</p>
+<p>|–探测开放的服务</p>
+<p>溢出</p>
+<p>弱口令</p>
+<p>分析网站目录结构</p>
+<p>整站程序Bug 黑白盒测试 获取SHELL</p>
+<p>nslookup 列出所有二级玉米 逐个分析</p>
+<p>探测弱口令</p>
+<p>注入</p>
+<p>注入</p>
+<p>嗅探+arp</p>
+<p>收集一切能收集管理员信息 充分应用baidu google 实现社会工程序</p>
+<h2 id="冰的原点总结："><a href="#冰的原点总结：" class="headerlink" title="冰的原点总结："></a>冰的原点总结：</h2><p>1、pangloin对oracle注入点的误报率偏高！</p>
+<p>2、SQL语句有时候虽然暴错，我们的语句也有可能成功了！</p>
+<p>0判断权限不准确；</p>
+<p>4、在PCANYWHERE提权的时候常碰到连上去还要输入WIN密码，网上流传的方法操作起来不切实际，其实连上去就等于拿到系统权限了，大家自己研究，这里提一下；</p>
+<p>5、oracle注入不支持多句执行，如update等语句；</p>
+<p>6、linx自动攻击器局限性很大，没有手工准确</p>
+<p>7、内网渗透时尽量少登录3389，以免被管理员发现；</p>
+<p>8、会免杀对渗透来说如虎添翼；</p>
+<p>9、如果你想留住这台肉鸡，抓HASH，搞到FTP等信息都是有必要的。</p>
+<p>10、社工的力量很强大，真的。</p>
+<h2 id="某菜鸟总结"><a href="#某菜鸟总结" class="headerlink" title="某菜鸟总结:"></a>某菜鸟总结:</h2><p>1.上传漏洞[不多讲] pS: 如果看到:选择你要上传的文件 [重新上传]或者出现“请登陆后使用”，80%就有漏洞了！ 有时上传不一定会成功,这是因为Cookies不一样.我们就要用WSockExpert取得Cookies.再用DOMAIN上传.</p>
+<p>2.注入漏洞[不多讲] pS:对MD5密码.有时我们不是哪么容易跑出来.如果是[SQL数据库].那么我们可以用以下命令: http:&#x2F;&#x2F;注入网址;update admin set password&#x3D;’新MD5密码’ where password&#x3D;’旧MD5密码’– [admin为表名.]</p>
+<p>3.COOKIE诈骗：把自己的ID修改成管理员的，MD5密码也修改成他的，用桂林老兵工具可以修改COOKIE。</p>
+<p>4.暴库:把二级目录中间的&#x2F;换成%5c EY:<a target="_blank" rel="noopener" href="http://www.ahttc.edu.cn/otherweb">http://www.ahttc.edu.cn/otherweb</a> … s.asp?BigClassName&#x3D;职责范围&amp;BigClassType&#x3D;1 如果你能看到：’</p>
+<p>’E:&amp;#92;ahttc040901&amp;#92;otherweb&amp;#92;dz&amp;#92;database&amp;#92;iXuEr_Studio.asa’不是一个有效的路径。 确定路径名称拼写是否正确，以及是否连接到文件存放的服务器。 这样的就是数据库了。下载时用FLASHGET换成.MDB格式的就行.</p>
+<p>5.’or’ &#x3D; ‘or’这是一个可以连接SQL的语名句.可以直接进入后台。我收集了一下。类似的还有： ’or’’&#x3D;’ &quot; or &quot;a&quot;&#x3D;&quot;a ’) or (’a’&#x3D;’a &quot;) or (&quot;a&quot;&#x3D;&quot;a or 1&#x3D;1– ’ or ’a’&#x3D;’a</p>
+<p>6.社会工程学。这个我们都知道吧。就是猜解。 EY：<a target="_blank" rel="noopener" href="http://www.neu.edu.cn/waishi/admin">http://www.neu.edu.cn/waishi/admin</a> admin waishi</p>
+<p>7.写入ASP格式数据库。就是一句话木马[〈%execute request(&quot;value&quot;)%〉 ]，常用在留言本. EY：<a target="_blank" rel="noopener" href="http://www.ahsdxy.ah.edu.cn/ebook/db/ebook.asp[%E8%BF%99%E4%B8%AA%E5%B0%B1%E6%98%AFASP%E6%A0%BC%E5%BC%8F%E7%9A%84%E6%95%B0%E6%8D%AE%E5%BA%93]%EF%BC%8C%E5%86%8D%E5%86%99%E5%85%A5%E4%B8%80%E5%8F%A5%E8%AF%9D%E6%9C%A8">http://www.ahsdxy.ah.edu.cn/ebook/db/ebook.asp[这个就是ASP格式的数据库]，再写入一句话木</a> 马</p>
+<p>8.源码利用：一些网站用的都是网上下载的源码.有的站长很菜.什么也不改. EY:<a target="_blank" rel="noopener" href="http://www.ahsdxy.ah.edu.cn/xiaoyoulu/index.asp">http://www.ahsdxy.ah.edu.cn/xiaoyoulu/index.asp</a> 这个站用的是：杰出校友录，源码我下过了， 默认数据库&#x2F;webshell路径：&amp;#92;database&amp;#92;liangu_data.mdb 后台管理：</p>
+<p>9.默认数据库&#x2F;webshell路径利用:这样的网站很多&#x2F;利人别人的WEBSHELL. &#x2F;Databackup&#x2F;dvbbs7.MDB &#x2F;bbs&#x2F;Databackup&#x2F;dvbbs7.MDB &#x2F;bbs&#x2F;Data&#x2F;dvbbs7.MDB &#x2F;data&#x2F;dvbbs7.mdb &#x2F;bbs&#x2F;diy.asp &#x2F;diy.asp &#x2F;bbs&#x2F;cmd.asp &#x2F;bbs&#x2F;cmd.exe &#x2F;bbs&#x2F;s-u.exe &#x2F;bbs&#x2F;servu.exe 工具：网站猎手 挖掘鸡 EY：<a target="_blank" rel="noopener" href="http://www.heimian.com/bbs/Databackup/dvbbs7.MDB">http://www.heimian.com/bbs/Databackup/dvbbs7.MDB</a></p>
+<p>10.查看目录法:人一些网站可以断开目录，可以方问目录。 EY：<a target="_blank" rel="noopener" href="http://www.ujs168.com/shop/admin/">http://www.ujs168.com/shop/admin/</a> <a target="_blank" rel="noopener" href="http://escolourfvl.com/babyfox/admin/%23bb%23bb%23dedsed2s/">http://escolourfvl.com/babyfox/admin/%23bb%23bb%23dedsed2s/</a> 这样我们可以找到数据库，下载不用我教吧</p>
+<p>11.搜索引擎利用: (1).inurl:flasher_list.asp 默认数据库:database&#x2F;flash.mdb 后台&#x2F;manager&#x2F; (2).找网站的管理后台地址: site:xxxx.comintext:管理 site:xxxx.comintitle:管理 〈关键字很多，自已找〉 site:xxxx.cominurl:login (3).查找access的数据库,mssql、mysql的连接文件 allinurl:bbsdata filetype:mdbinurl:database filetype:incconn inurl:datafiletype:mdb 我主不做了。。自已做做吧。。</p>
+<p>12.旁注,也就是跨站. 我们入侵某站时可能这个站坚固的无懈可击，我们可以找下和这个站同一服务器的站点，然后在利 用这个站点用提权，嗅探等方法来入侵我们 要入侵的站点。，在这里有个难点，就是一些服务器 的绝对路径经过加密，这就看我们的本事了</p>
+
+  </article>
+
+  
+      
+
+  
+  
+  <div class="nexmoe-post-meta nexmoe-rainbow">
+    
+        <a class="nexmoefont icon-appstore-fill -link" href="/categories/%E6%8A%80%E8%83%BD%E8%BE%93%E5%87%BA/">技能输出</a>
+    
+    
+        <a class="nexmoefont icon-tag-fill -none-link" href="/tags/IT/" rel="tag">IT</a> <a class="nexmoefont icon-tag-fill -none-link" href="/tags/IT%EF%BC%9A%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/" rel="tag">IT：渗透测试</a>
+    
+</div>
+
+  
+      <div class="nexmoe-post-footer">
+          <section class="nexmoe-comment">
+    <div class="valine"></div>
+<script src='https://cdn.jsdelivr.net/npm/valine'></script>
+<script>
+    // 使用方法 https://valine.js.org/quickstart.html
+    new Valine({
+        el: '.valine',
+        appId: 'ccYUjMUb3CJy31yGTrKeOq4Q-gzGzoHsz',
+        appKey: 'CT15G0YbAHQXlDX2b9KrLrOD'
+    })
+</script>
+</section>
+      </div>
+  
+</div>
+            <div class="nexmoe-post-right">
+              <div class="nexmoe-fixed">
+                  <div class="nexmoe-tool"> 
+                    
+                      
+                        
+                          
+                          
+                              <button class="mdui-fab catalog" style="overflow:unset;">
+                                  <i class="nexmoefont icon-i-catalog"></i>
+                                  <div class="nexmoe-toc">
+                                      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#OldJun%E6%80%BB%E7%BB%93"><span class="toc-number">1.</span> <span class="toc-text">OldJun总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#XXbing%E6%80%BB%E7%BB%93"><span class="toc-number">2.</span> <span class="toc-text">XXbing总结:</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%B0%E7%9A%84%E5%8E%9F%E7%82%B9%E6%80%BB%E7%BB%93%EF%BC%9A"><span class="toc-number">3.</span> <span class="toc-text">冰的原点总结：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9F%90%E8%8F%9C%E9%B8%9F%E6%80%BB%E7%BB%93"><span class="toc-number">4.</span> <span class="toc-text">某菜鸟总结:</span></a></li></ol>
+                                  </div>
+                              </button>
+                          
+                          
+                      
+                    
+                      <a href="#nexmoe-content" class="toc-link" aria-label="回到顶部" title="top"><button class="mdui-fab mdui-ripple"><i class="nexmoefont icon-caret-top"></i></button></a>
+                  </div>
+              </div>
+            </div>
+        </div>
+    </div>
+     
+    <div id="nexmoe-search-space">
+        <div class="search-container">
+            <div class="search-header">
+                <div class="search-input-container">
+                    <input class="search-input" type="text" placeholder="搜索" oninput="sinput();">
+                </div>
+                <a class="search-close" onclick="sclose();">×</a>
+            </div>
+            <div class="search-body"></div>
+        </div>
+    </div>
+
+    
+<script src="/lib/mdui_043tiny/mdui.js"></script>
+<script src="/lib/jquery.min.js"></script>
+<script src="/lib/justifiedGallery/jquery.justifiedGallery.min.js"></script>
+<script src="/lib/fancybox/fancybox.umd.js"></script>
+
+
+ 
+
+<script async src="/js/app.js?v=1708854159758"></script>
+
+
+
+<script>
+	$(".justified-gallery").justifiedGallery({
+		rowHeight: 160,
+		margins: 10,
+	});
+</script>
+
+
+    
+
+
+
+
+
+</body>
+
+</html>

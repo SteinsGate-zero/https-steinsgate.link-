@@ -1,21 +1,21 @@
 <!DOCTYPE html>
 
-<html data-project="ielts-speaking-reconstruction-trainer" data-version="v23.6-index-export-review-progress" lang="en"><head>
+<html data-project="ielts-speaking-reconstruction-trainer" data-version="v23.7-title-version-footer" lang="en"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
 <meta content="yes" name="apple-mobile-web-app-capable"/>
 <meta content="IELTS Trainer" name="apple-mobile-web-app-title"/>
 <meta content="#111111" name="theme-color"/>
-<title>IELTS Speaking Reconstruction Bank</title>
-<meta content="Local HTML IELTS speaking reconstruction trainer. v23.6 improves iOS export naming and Review progress display while preserving the lightweight UI." name="description"/>
+<title>IELTS Speaking Reconstruction Trainer</title>
+<meta content="IELTS speaking reconstruction trainer. v23.7 cleans the title area and adds a compact footer version log while preserving Review progress and Save HTML behavior." name="description"/>
 <meta content="noindex, nofollow" name="robots"/><!--AI_MAINTENANCE_SPEC_START
 This maintenance note is intentionally hidden. Read the JSON script tag with id="AI_MAINTENANCE_SPEC" before modifying this file.
 AI_MAINTENANCE_SPEC_END--><script id="AI_MAINTENANCE_SPEC" type="application/json">
 {
   "spec_name": "AI_MAINTENANCE_SPEC_FOR_IELTS_SPEAKING_RECONSTRUCTION_TRAINER",
-  "spec_version": "v23.6-index-export-review-progress",
+  "spec_version": "v23.7-title-version-footer",
   "last_updated": "2026-06-16",
-  "product_name": "IELTS Speaking Reconstruction Bank / Local HTML Trainer",
+  "product_name": "IELTS Speaking Reconstruction Trainer / Single-file HTML Trainer",
   "core_goal": "Create a fast oral reconstruction trainer: show Question + Function first, let the user reconstruct mentally/orally, then reveal Answer only for calibration. It is not for memorizing scripts or passive scheduling. Review mode is a lightweight self-review ordering tool with compact last-review date badges, not an automatic spaced-repetition scheduler.",
   "primary_user_context": {
     "device": "iPhone 16 Pro Max, latest iOS at time of creation",
@@ -61,7 +61,9 @@ AI_MAINTENANCE_SPEC_END--><script id="AI_MAINTENANCE_SPEC" type="application/jso
       "complex scheduling controls"
     ],
     "how_to_use": "Keep as one collapsed section. Do not repeat training instructions on every card.",
-    "navigation_priority": "Top-level navigation must prioritize IELTS speaking parts first: Part 1 / Part 2 / Part 3. Topic modules are secondary inside each part."
+    "navigation_priority": "Top-level navigation must prioritize IELTS speaking parts first: Part 1 / Part 2 / Part 3. Topic modules are secondary inside each part.",
+    "title_policy": "Visible title should name the product as a reconstruction trainer, not a bank. Avoid outdated labels such as Local HTML or Part 1 + Part 2 in the header.",
+    "footer_policy": "Footer may show one compact Save HTML reminder plus a collapsed recent-version log. Keep version details at the bottom so the training entrance stays clean."
   },
   "content_import_rules": {
     "raw_md_first": "Extract only answers that were refined, practiced, accepted, or clearly confirmed in the source conversation.",
@@ -104,7 +106,8 @@ AI_MAINTENANCE_SPEC_END--><script id="AI_MAINTENANCE_SPEC" type="application/jso
     "floating_top": "Use one fixed lower-right chevron-style upward icon button for scroll-to-top. Remove repeated per-card Top links. The floating control should appear only after the user scrolls down and should remain visually quiet.",
     "review": "Small control button after Timeline. Toggle self-review sorting by data-reviewed-at. Unreviewed question cards appear first; reviewed cards sort oldest to newest. Review mode is independent from Timeline and disabled in Fact Bank mode. In Review mode, cards show a compact badge: Reviewed M/D or Not reviewed yet. The section counter displays current-within-7-days/total instead of a raw total, e.g. 6/15 current.",
     "review_mark_button": "Each question card has one quiet Reviewed button, visible only in Review mode. Clicking it updates that card’s data-reviewed-at timestamp in the current page state and re-sorts visible cards in Review mode. The visible review badge displays only month/day, not the exact time.",
-    "save_html": "Save HTML exports the current trainer as a new single-file HTML with updated data-reviewed-at attributes embedded in the question cards. On iPhone/Safari it should prefer the native share/save sheet when available and fall back to ordinary download. The share payload should include only the HTML file and title, not extra text, to avoid creating a separate text item. It must not silently write to disk; the user saves/replaces the exported file as the new source of truth."
+    "save_html": "Save HTML exports the current trainer as a new single-file HTML with updated data-reviewed-at attributes embedded in the question cards. On iPhone/Safari it should prefer the native share/save sheet when available and fall back to ordinary download. The share payload should include only the HTML file and title, not extra text, to avoid creating a separate text item. It must not silently write to disk; the user saves/replaces the exported file as the new source of truth.",
+    "version_log": "A compact footer details block may show the current visible version and recent changes. It should remain collapsed by default and must not expose the full hidden maintenance spec."
   },
   "technical_rules": {
     "single_file": "Keep CSS, JS, and content inline. No network dependencies.",
@@ -125,6 +128,16 @@ AI_MAINTENANCE_SPEC_END--><script id="AI_MAINTENANCE_SPEC" type="application/jso
     "Preserve existing data-reviewed-at values when adding, updating, reordering, or importing question cards."
   ],
   "changelog": [
+    {
+      "version": "v23.7-title-version-footer",
+      "date": "2026-06-16",
+      "changes": [
+        "Changed the visible page title from IELTS Speaking Reconstruction Bank to IELTS Speaking Reconstruction Trainer.",
+        "Removed the outdated header eyebrow text Local HTML · Part 1 + Part 2.",
+        "Replaced the bottom Local HTML note with a compact Save HTML reminder and collapsed recent-version log.",
+        "Preserved card content, Review sorting, Review progress, Save HTML export naming, noindex/nofollow, and Fact Bank behavior."
+      ]
+    },
     {
       "version": "v23.6-index-export-review-progress",
       "date": "2026-06-16",
@@ -339,6 +352,16 @@ AI_MAINTENANCE_SPEC_END--><script id="AI_MAINTENANCE_SPEC" type="application/jso
   "personal_fact_bank_policy": "Keep only high-reuse personal facts that can support multiple IELTS questions. Group facts into broad life-material categories, not fine-grained tags. Default question practice should not display Fact Bank.",
   "navigation_priority": "Top-level navigation: All / Part 1 / Part 2 / Part 3 / Fact Bank. Inside Part modes, topic jumps are secondary. Inside Fact Bank mode, category jumps may be shown.",
   "change_log": [
+    {
+      "version": "v23.7-title-version-footer",
+      "date": "2026-06-16",
+      "changes": [
+        "Changed the visible page title from IELTS Speaking Reconstruction Bank to IELTS Speaking Reconstruction Trainer.",
+        "Removed the outdated header eyebrow text Local HTML · Part 1 + Part 2.",
+        "Replaced the bottom Local HTML note with a compact Save HTML reminder and collapsed recent-version log.",
+        "Preserved card content, Review sorting, Review progress, Save HTML export naming, noindex/nofollow, and Fact Bank behavior."
+      ]
+    },
     {
       "version": "v23.6-index-export-review-progress",
       "date": "2026-06-16",
@@ -1124,6 +1147,45 @@ AI_MAINTENANCE_SPEC_END--><script id="AI_MAINTENANCE_SPEC" type="application/jso
   .floating-top:hover { box-shadow: 0 12px 26px var(--shadow); }
   .floating-top:active { transform: translateY(1px); }
 
+
+  /* v23.7 footer version log */
+  .version-details {
+    max-width: 680px;
+    margin: 24px auto 0;
+    text-align: left;
+  }
+  .version-details > summary {
+    cursor: pointer;
+    color: var(--muted);
+    text-align: center;
+    list-style: none;
+    font-size: 12px;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .version-details > summary::-webkit-details-marker { display: none; }
+  .version-details > summary::after {
+    content: ' · updates';
+    opacity: .72;
+  }
+  .version-details[open] > summary::after { content: ' · hide'; }
+  .version-content {
+    margin-top: 10px;
+    padding: 12px 14px;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    background: var(--paper);
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.5;
+  }
+  .version-content p {
+    margin: 0 0 6px;
+    color: var(--ink);
+  }
+  .version-content ul { margin: 4px 0 0 18px; }
+  .version-content li { margin: 4px 0; }
+
 </style>
 </head>
 <body class="">
@@ -1131,8 +1193,7 @@ AI_MAINTENANCE_SPEC_END--><script id="AI_MAINTENANCE_SPEC" type="application/jso
 <header>
 <div class="header-row">
 <div class="title-wrap">
-<div class="eyebrow">Local HTML · Part 1 + Part 2</div>
-<h1>IELTS Speaking Reconstruction Bank</h1>
+<h1>IELTS Speaking Reconstruction Trainer</h1>
 </div>
 <button aria-label="Switch to night mode" class="theme-toggle" id="themeToggle" title="Night mode" type="button">☾</button>
 </div>
@@ -1456,7 +1517,18 @@ why: “by myself” is smoother and widely reusable. i think i need both. i do 
 <ul><li>I definitely enjoy travelling.</li><li>my reason might be a bit different from others.</li><li>I’m not actually travelling for the sights.</li><li>I’m mostly travelling for the food.</li><li>not for the scenery</li></ul></div></details></article></section><section class="module-section" data-module-section="part2" data-part-section="part2" id="module-part2"><div class="section-heading"><h2>Part 2｜Cue cards &amp; follow-ups</h2><span>2 questions</span></div><article class="card question-card" data-part="part2" data-search="part2 part 2 helped someone music competition instrumental version song remove vocals professional help effort appreciated disappointment reflection" data-source-seq="1" data-trained-at="2026-06-02T09:26:19" id="q-helped-someone"><div class="card-top"><div class="title-block"><div class="meta-row"><span class="value-badge core" title="high-reuse Part 2 story topic">Core</span><span class="time-badge">2026/6/2</span></div><h2>Helped someone with music</h2></div></div><section class="prompt-block"><h3>Question</h3><p>Describe a time when you helped someone. You should say who you helped, what the problem was, how you helped, and explain how you felt.</p></section><section class="function-block"><h3>Function</h3><p>past story → problem → action → feeling/reflection</p></section><details class="answer-block"><summary><span>Answer</span></summary><div class="answer-content"><h4>Final answer</h4><p>I remember back in elementary school, a classmate told me she wanted to enter a music competition but couldn’t find the right instrumental version of a song. I tried to remove the vocals myself, but it was tough. In the end, I got some professional help and gave her what she needed. She never really shared how it turned out, and I felt a bit disappointed. I started to think my effort wasn’t appreciated, but I understood maybe it didn’t go well for her.</p><h4>Best alternative</h4><p>Old: I even felt like maybe my help didn’t matter.</p><p>New: I started to think my effort wasn’t appreciated.</p><p>Why: It expresses the feeling clearly without sounding too dramatic.</p><h4>Reusable chunks</h4><ul><li>back in elementary school</li><li>enter a music competition</li><li>couldn’t find the right instrumental version</li><li>remove the vocals myself</li><li>got some professional help</li><li>shared how it turned out</li><li>my effort wasn’t appreciated</li></ul></div></details></article><article class="card question-card" data-part="part2" data-search="part2 part 2 solved problem procrastination ielts nonfiction book mechanism urge mantra don’t give in to feeling good now action creates motivation follow-up strategy" data-source-seq="1" data-trained-at="2026-06-08T19:09:59" id="q-solved-problem"><div class="card-top"><div class="title-block"><div class="meta-row"><span class="value-badge core" title="high-reuse Part 2 problem-solving topic">Core</span><span class="time-badge">2026/6/8</span></div><h2>Solved procrastination problem</h2></div></div><section class="prompt-block"><h3>Question</h3><p>Describe a time when you solved a problem. You should say what the problem was, when it happened, how you solved it, and explain how you felt afterwards.</p></section><section class="function-block"><h3>Function</h3><p>problem → context → feeling → solution → result</p></section><details class="answer-block"><summary><span>Answer</span></summary><div class="answer-content"><h4>Final answer</h4><p>One problem I’ve faced daily is procrastination. It happened often, especially when I was preparing for IELTS. It used to frustrate me, but after reading a nonfiction book about it, I understood why it happens. Now, whenever I feel the urge to procrastinate, I recall a mantra from that book: “Don’t give in to feeling good now.” That mindset has been really helpful for me.</p><h4>Reusable chunks</h4><ul><li>One problem I’ve faced daily is...</li><li>It happened often, especially when...</li><li>It used to frustrate me.</li><li>I understood why it happens.</li><li>whenever I feel the urge to...</li><li>Don’t give in to feeling good now.</li></ul></div></details><section class="followup-block"><div class="followup-label">Follow-up</div><section class="prompt-block"><h3>Follow-up Question</h3><p>What other strategies have you found useful in overcoming procrastination?</p></section><section class="function-block"><h3>Function</h3><p>extra strategy → principle → personal application → result</p></section><details class="answer-block followup-answer-block"><summary><span>Answer</span></summary><div class="answer-content"><h4>Final answer</h4><p>Another strategy I learned from that book is that I don’t need to feel motivated to act, because action creates motivation. Whenever I think I lack motivation, I remind myself that’s just an excuse. Once I start doing the task, my motivation follows. I’ve found that very useful when preparing for IELTS.</p><h4>Reusable chunks</h4><ul><li>I don’t need to feel motivated to act.</li><li>action creates motivation</li><li>that’s just an excuse</li><li>Once I start doing the task...</li><li>my motivation follows</li></ul></div></details></section></article></section>
 <div class="empty" id="empty" style="display: none;">No matching questions.</div>
 </main>
-<p class="footer-note">Single-file local HTML. No network required.</p>
+<details class="footer-note version-details">
+<summary>Single-file trainer · Save HTML to keep review progress · v23.7</summary>
+<div class="version-content">
+<p><strong>Recent updates</strong></p>
+<ul>
+<li><strong>v23.7</strong> — Renamed the page, removed the outdated top label, and added this compact footer version log.</li>
+<li><strong>v23.6</strong> — Export filename uses index_YYYYMMDD_HHMM.html; Review progress shows current/total.</li>
+<li><strong>v23.5</strong> — Strengthened export cleanup for browser-injected attributes.</li>
+<li><strong>v23.4</strong> — Documented the GitHub Pages source-file workflow.</li>
+</ul>
+</div>
+</details>
 </div>
 <button aria-label="Scroll to top" class="floating-top" id="floatingTopBtn" title="Scroll to top" type="button"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M6 14.5L12 8.5L18 14.5"></path></svg></button>
 <script>

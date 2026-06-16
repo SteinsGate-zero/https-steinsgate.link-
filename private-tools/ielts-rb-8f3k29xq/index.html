@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html data-project="ielts-speaking-reconstruction-trainer" data-version="v23.2-review-button-scoped" lang="en">
+<html data-project="ielts-speaking-reconstruction-trainer" data-version="v23.4-source-workflow-notes" lang="en">
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
@@ -8,19 +8,20 @@
 <meta content="IELTS Trainer" name="apple-mobile-web-app-title"/>
 <meta content="#111111" name="theme-color"/>
 <title>IELTS Speaking Reconstruction Bank</title>
-<meta content="Local HTML IELTS speaking reconstruction trainer. v23.1 adds compact Review-mode date badges while preserving the lightweight UI." name="description"/><!--AI_MAINTENANCE_SPEC_START
+<meta content="Local HTML IELTS speaking reconstruction trainer. v23.4 documents the source-file workflow and cleans exported HTML while preserving the lightweight UI." name="description"/>
+<meta name="robots" content="noindex, nofollow"/><!--AI_MAINTENANCE_SPEC_START
 This maintenance note is intentionally hidden. Read the JSON script tag with id="AI_MAINTENANCE_SPEC" before modifying this file.
 AI_MAINTENANCE_SPEC_END--><script id="AI_MAINTENANCE_SPEC" type="application/json">
 {
   "spec_name": "AI_MAINTENANCE_SPEC_FOR_IELTS_SPEAKING_RECONSTRUCTION_TRAINER",
-  "spec_version": "v23.2-review-button-scoped",
+  "spec_version": "v23.4-source-workflow-notes",
   "last_updated": "2026-06-16",
   "product_name": "IELTS Speaking Reconstruction Bank / Local HTML Trainer",
   "core_goal": "Create a fast oral reconstruction trainer: show Question + Function first, let the user reconstruct mentally/orally, then reveal Answer only for calibration. It is not for memorizing scripts or passive scheduling. Review mode is a lightweight self-review ordering tool with compact last-review date badges, not an automatic spaced-repetition scheduler.",
   "primary_user_context": {
     "device": "iPhone 16 Pro Max, latest iOS at time of creation",
-    "preferred_use": "single-file local HTML first; possible online URL later for home-screen web app",
-    "browser_reality": "Files Quick Look and some third-party browsers may open local HTML. Safari/Chrome appearing in iOS Open In menus is controlled by app file associations, not by HTML code.",
+    "preferred_use": "single-file HTML as source of truth; deploy through a hidden/unlinked https path or localhost for iPhone Safari; use Save HTML after real review sessions and replace the hosted index.html with the exported copy.",
+    "browser_reality": "Files Quick Look, Alook, and many HTML viewer apps may render the file but may not support generated-file saving. Safari opened from https/http or localhost is the preferred runtime for Save HTML. Generated files should be treated as new mother copies only after confirming the intended cards were marked Reviewed.",
     "future_pipeline": "The intended helper is the IELTS 6.5 HTML Trainer Builder Custom GPT. It reads current HTML + raw Manual Chunk Coach .md exports, extracts only stable trained speaking material, improves/infer Functions when needed, updates Personal Fact Bank only for high-reuse facts, outputs a new single-file HTML, and shows a complete import report in chat.",
     "system_architecture_note": "The HTML hidden spec stores the whole training-system architecture so future windows can understand component responsibilities without repeated explanation."
   },
@@ -104,14 +105,16 @@ AI_MAINTENANCE_SPEC_END--><script id="AI_MAINTENANCE_SPEC" type="application/jso
     "floating_top": "Use one fixed lower-right chevron-style upward icon button for scroll-to-top. Remove repeated per-card Top links. The floating control should appear only after the user scrolls down and should remain visually quiet.",
     "review": "Small control button after Timeline. Toggle self-review sorting by data-reviewed-at. Unreviewed question cards appear first; reviewed cards sort oldest to newest. Review mode is independent from Timeline and disabled in Fact Bank mode. In Review mode, cards show a compact badge: Reviewed M/D or Not reviewed yet.",
     "review_mark_button": "Each question card has one quiet Reviewed button, visible only in Review mode. Clicking it updates that card’s data-reviewed-at timestamp in the current page state and re-sorts visible cards in Review mode. The visible review badge displays only month/day, not the exact time.",
-    "save_html": "Save HTML exports the current trainer as a new single-file HTML with updated data-reviewed-at attributes embedded in the question cards. It does not silently write to disk; the user saves/replaces the exported file as the new source of truth."
+    "save_html": "Save HTML exports the current trainer as a new single-file HTML with updated data-reviewed-at attributes embedded in the question cards. On iPhone/Safari it should prefer the native share/save sheet when available and fall back to ordinary download. It must not silently write to disk; the user saves/replaces the exported file as the new source of truth."
   },
   "technical_rules": {
     "single_file": "Keep CSS, JS, and content inline. No network dependencies.",
     "local_html": "Do not depend on service workers, external JSON, external JS, external CSS, or remote fonts.",
     "search": "Search uses data-search text on cards. Update this whenever content changes.",
     "counts": "Update module counts and total status when adding/removing question cards.",
-    "review_storage": "Review timestamps are stored as data-reviewed-at on question cards in the exported HTML, not only in localStorage. Browser localStorage may be used only for non-source-of-truth UI preferences such as theme."
+    "review_storage": "Review timestamps are stored as data-reviewed-at on question cards in the exported HTML, not only in localStorage. Browser localStorage may be used only for non-source-of-truth UI preferences such as theme.",
+    "export_cleanup": "Save HTML should clean transient UI/export artifacts before writing the file: active mode classes, highlight/open states, generated Review buttons, temporary sort metadata, unsaved button state, inline display styles caused by filtering, and browser/extension injected attributes such as names beginning with double underscores.",
+    "seo_privacy": "Keep robots noindex/nofollow in the HTML head for hidden-link deployment. This prevents compliant search-index display but does not make the page private."
   },
   "change_protocol": [
     "Preserve the minimal visible UI unless the user explicitly asks for a new visible feature.",
@@ -121,6 +124,33 @@ AI_MAINTENANCE_SPEC_END--><script id="AI_MAINTENANCE_SPEC" type="application/jso
     "Preserve existing data-reviewed-at values when adding, updating, reordering, or importing question cards."
   ],
   "changelog": [
+    {
+      "version": "v23.4-source-workflow-notes",
+      "date": "2026-06-16",
+      "changes": [
+        "Documented the hidden-link deployment and source-file replacement workflow inside the hidden maintenance spec.",
+        "Recorded that noindex/nofollow is only anti-indexing, not password protection.",
+        "Recorded the correct review workflow: mark only genuinely reviewed cards, Save HTML, then replace the hosted index.html as the new mother copy.",
+        "Strengthened Save HTML export cleanup so transient browser/extension attributes are removed from exported files."
+      ]
+    },
+    {
+      "version": "v23.3-noindex-ios-save",
+      "date": "2026-06-16",
+      "changes": [
+        "Added robots noindex/nofollow metadata for hidden-link deployment.",
+        "Changed Save HTML to prefer the native share/save sheet for file-capable browsers, with ordinary download as fallback.",
+        "Preserved Review mode, card-scoped Reviewed controls, Timeline behavior, visible card content, and Fact Bank behavior."
+      ]
+    },
+    {
+      "version": "v23.2-review-button-scoped",
+      "date": "2026-06-16",
+      "changes": [
+        "Changed per-card Reviewed controls so they are visible only in Review mode.",
+        "Kept Review badges visible only in Review mode and preserved sorting, Save HTML, Timeline, and existing card content."
+      ]
+    },
     {
       "version": "v23.2-review-button-scoped",
       "date": "2026-06-16",
@@ -291,11 +321,13 @@ AI_MAINTENANCE_SPEC_END--><script id="AI_MAINTENANCE_SPEC" type="application/jso
   "navigation_priority": "Top-level navigation: All / Part 1 / Part 2 / Part 3 / Fact Bank. Inside Part modes, topic jumps are secondary. Inside Fact Bank mode, category jumps may be shown.",
   "change_log": [
     {
-      "version": "v23.2-review-button-scoped",
+      "version": "v23.4-source-workflow-notes",
       "date": "2026-06-16",
       "changes": [
-        "Changed per-card Reviewed controls so they are visible only in Review mode.",
-        "Kept Review badges visible only in Review mode and preserved sorting, Save HTML, Timeline, and existing card content."
+        "Documented the hidden-link deployment and source-file replacement workflow inside the hidden maintenance spec.",
+        "Recorded that noindex/nofollow is only anti-indexing, not password protection.",
+        "Recorded the correct review workflow: mark only genuinely reviewed cards, Save HTML, then replace the hosted index.html as the new mother copy.",
+        "Strengthened Save HTML export cleanup so transient browser/extension attributes are removed from exported files."
       ]
     },
     {
@@ -617,6 +649,20 @@ AI_MAINTENANCE_SPEC_END--><script id="AI_MAINTENANCE_SPEC" type="application/jso
       "Keep Coverage Summary in the Builder chat report, not in the visible HTML page.",
       "Update this hidden spec and changelog when architecture-level rules change."
     ]
+  },
+  "deployment_and_source_workflow": {
+    "status": "active for user-hosted GitHub Pages / hidden-link use",
+    "recommended_hosting": "Put the trainer in a random, unlinked subdirectory such as private-tools/<random-slug>/index.html and open it through Safari from the HTTPS URL.",
+    "privacy_boundary": "noindex/nofollow reduces search-engine indexing but is not password protection. A public GitHub repository remains publicly viewable to anyone with repository access or the exact path.",
+    "do_not_link_from_blog": "Do not add links to the trainer from the Vlog home page, archives, categories, tags, navigation, public README, sitemap-like pages, or search data files.",
+    "normal_review_flow": [
+      "Open the hosted trainer URL in Safari.",
+      "Tap Review only when doing review ordering.",
+      "Tap a card’s Reviewed button only after actually reviewing that card.",
+      "Tap Save HTML after the session.",
+      "Replace the hosted index.html with the exported HTML so data-reviewed-at remains the source of truth for future Builder imports."
+    ],
+    "test_file_warning": "Do not use a test export as the long-term mother copy if all cards were accidentally marked Reviewed during testing."
   }
 }
 </script>
@@ -1736,14 +1782,30 @@ why: “by myself” is smoother and widely reusable. i think i need both. i do 
     if (!el.getAttribute('style')) el.removeAttribute('style');
   }
 
+
+
+  function cleanTransientAttributes(root) {
+    if (!root) return;
+    const nodes = [root, ...Array.from(root.querySelectorAll('*'))];
+    nodes.forEach(node => {
+      Array.from(node.attributes || []).forEach(attr => {
+        const name = attr.name;
+        if (name.startsWith('__') || name.startsWith('data-gr-') || name.startsWith('data-new-gr-')) {
+          node.removeAttribute(name);
+        }
+      });
+    });
+  }
+
   function buildExportName() {
     const date = new Date();
     const pad = n => String(n).padStart(2, '0');
     const stamp = `${date.getFullYear()}${pad(date.getMonth() + 1)}${pad(date.getDate())}_${pad(date.getHours())}${pad(date.getMinutes())}`;
-    return `IELTS_Speaking_Reconstruction_Trainer_v23_1_review_badges_${stamp}.html`;
+    return `IELTS_Speaking_Reconstruction_Trainer_v23_4_source_workflow_notes_${stamp}.html`;
   }
 
   function prepareCloneForExport(clone) {
+    cleanTransientAttributes(clone);
     const cloneBody = clone.querySelector('body');
     if (cloneBody) cloneBody.classList.remove('timeline-mode', 'review-mode');
 
@@ -1796,21 +1858,48 @@ why: “by myself” is smoother and widely reusable. i think i need both. i do 
     }
   }
 
-  function saveCurrentHtml() {
-    const clone = document.documentElement.cloneNode(true);
-    prepareCloneForExport(clone);
-    const html = '<!DOCTYPE html>\n' + clone.outerHTML;
-    const blob = new Blob([html], { type: 'text/html;charset=utf-8' });
+  function triggerHtmlDownload(blob, fileName) {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = buildExportName();
+    a.download = fileName;
     document.body.appendChild(a);
     a.click();
     a.remove();
-    setTimeout(() => URL.revokeObjectURL(url), 1200);
-    hasUnsavedReviewChanges = false;
-    updateSaveButton();
+    setTimeout(() => URL.revokeObjectURL(url), 1600);
+  }
+
+  async function saveCurrentHtml() {
+    const clone = document.documentElement.cloneNode(true);
+    prepareCloneForExport(clone);
+    const html = '<!DOCTYPE html>\n' + clone.outerHTML;
+    const fileName = buildExportName();
+    const blob = new Blob([html], { type: 'text/html;charset=utf-8' });
+
+    const markSaved = () => {
+      hasUnsavedReviewChanges = false;
+      updateSaveButton();
+    };
+
+    try {
+      if (typeof File !== 'undefined' && navigator.share && navigator.canShare) {
+        const file = new File([blob], fileName, { type: 'text/html' });
+        if (navigator.canShare({ files: [file] })) {
+          await navigator.share({
+            files: [file],
+            title: 'IELTS Trainer HTML',
+            text: 'Save this updated HTML as the new trainer source file.'
+          });
+          markSaved();
+          return;
+        }
+      }
+    } catch (e) {
+      if (e && e.name === 'AbortError') return;
+    }
+
+    triggerHtmlDownload(blob, fileName);
+    markSaved();
   }
 
   search.addEventListener('input', applySearch);

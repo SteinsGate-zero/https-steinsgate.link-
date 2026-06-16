@@ -1,1 +1,1874 @@
+<!DOCTYPE html>
 
+<html data-project="ielts-speaking-reconstruction-trainer" data-version="v23.2-review-button-scoped" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="IELTS Trainer" name="apple-mobile-web-app-title"/>
+<meta content="#111111" name="theme-color"/>
+<title>IELTS Speaking Reconstruction Bank</title>
+<meta content="Local HTML IELTS speaking reconstruction trainer. v23.1 adds compact Review-mode date badges while preserving the lightweight UI." name="description"/><!--AI_MAINTENANCE_SPEC_START
+This maintenance note is intentionally hidden. Read the JSON script tag with id="AI_MAINTENANCE_SPEC" before modifying this file.
+AI_MAINTENANCE_SPEC_END--><script id="AI_MAINTENANCE_SPEC" type="application/json">
+{
+  "spec_name": "AI_MAINTENANCE_SPEC_FOR_IELTS_SPEAKING_RECONSTRUCTION_TRAINER",
+  "spec_version": "v23.2-review-button-scoped",
+  "last_updated": "2026-06-16",
+  "product_name": "IELTS Speaking Reconstruction Bank / Local HTML Trainer",
+  "core_goal": "Create a fast oral reconstruction trainer: show Question + Function first, let the user reconstruct mentally/orally, then reveal Answer only for calibration. It is not for memorizing scripts or passive scheduling. Review mode is a lightweight self-review ordering tool with compact last-review date badges, not an automatic spaced-repetition scheduler.",
+  "primary_user_context": {
+    "device": "iPhone 16 Pro Max, latest iOS at time of creation",
+    "preferred_use": "single-file local HTML first; possible online URL later for home-screen web app",
+    "browser_reality": "Files Quick Look and some third-party browsers may open local HTML. Safari/Chrome appearing in iOS Open In menus is controlled by app file associations, not by HTML code.",
+    "future_pipeline": "The intended helper is the IELTS 6.5 HTML Trainer Builder Custom GPT. It reads current HTML + raw Manual Chunk Coach .md exports, extracts only stable trained speaking material, improves/infer Functions when needed, updates Personal Fact Bank only for high-reuse facts, outputs a new single-file HTML, and shows a complete import report in chat.",
+    "system_architecture_note": "The HTML hidden spec stores the whole training-system architecture so future windows can understand component responsibilities without repeated explanation."
+  },
+  "do_not_misinterpret_as": [
+    "a spaced-repetition system",
+    "a note-taking app replacement",
+    "a document archive",
+    "an answer memorization tool",
+    "a prediction engine for exact IELTS exam frequency"
+  ],
+  "source_of_truth_priority": [
+    "1. Current HTML visible UI + this hidden spec = product/UI contract",
+    "2. Raw ChatGPT conversation .md exports = content evidence",
+    "3. One-off external summaries or TSV-like artifacts = optional historical reference only for that specific import session",
+    "4. AI inference without evidence = lowest authority"
+  ],
+  "visible_ui_principles": {
+    "keep_default_view_minimal": true,
+    "default_visible_fields": [
+      "Question",
+      "Function",
+      "broad module/value badge when helpful"
+    ],
+    "default_hidden_fields": [
+      "Final answer",
+      "Follow-up answer",
+      "Alternative wording",
+      "Reusable chunks"
+    ],
+    "avoid_visible_clutter": [
+      "fine tag clouds",
+      "per-card task instructions",
+      "large collocation lists",
+      "large sentence-frame lists",
+      "source metadata unless the user activates Timeline",
+      "repeated per-card Top links",
+      "persistent large review statistics",
+      "complex scheduling controls"
+    ],
+    "how_to_use": "Keep as one collapsed section. Do not repeat training instructions on every card.",
+    "navigation_priority": "Top-level navigation must prioritize IELTS speaking parts first: Part 1 / Part 2 / Part 3. Topic modules are secondary inside each part."
+  },
+  "content_import_rules": {
+    "raw_md_first": "Extract only answers that were refined, practiced, accepted, or clearly confirmed in the source conversation.",
+    "do_not_rewrite_final_answer": "Do not invent a cleaner answer from scratch. If a better option is uncertain, place it under Alternative/Review instead of silently replacing Final answer.",
+    "alternative_policy": "Add Alternative only when the conversation explicitly discussed old/new wording or the user clearly accepted a revised version. Keep it inside Answer, hidden by default.",
+    "part2_followup_policy": "Part 2 follow-up stays inside the same parent cue-card card. Present it as a nested practice block using the same pattern: Follow-up Question → Function → Follow-up Answer. Do not make follow-ups a separate top-level category unless the user explicitly asks.",
+    "time_metadata_policy": "When a source .md has a Created timestamp, store it as data-trained-at. Do not show it by default. When Timeline mode is enabled, show compact time badges and sort dated cards first; undated legacy cards stay last and show no time.",
+    "review_metadata_policy": "Each question card may carry data-reviewed-at as the user-controlled last-review timestamp. It must be preserved when importing new content. Cards without data-reviewed-at are treated as unreviewed and appear first in Review mode."
+  },
+  "information_architecture": {
+    "current_modules": [
+      "Top filter: All / Part 1 / Part 2 / Part 3 / Fact Bank",
+      "Part 1｜Daily life & routine",
+      "Part 1｜People & relationships",
+      "Part 1｜Hometown & culture",
+      "Part 2｜Cue cards & follow-ups",
+      "Part 3｜future abstract discussion cards when added",
+      "Personal Fact Bank as independent top-level mode"
+    ],
+    "personal_fact_bank_policy": "Keep only high-reuse personal facts that can support multiple IELTS questions. Personal Fact Bank should remain collapsed and compact. Do not copy every answer detail into it.",
+    "ordering_policy": "Default order should optimize reconstruction/reuse value inside broad modules. Timeline mode is a temporary viewing mode for source chronology, not the default product order.",
+    "value_badges": {
+      "Core": "high-reuse base topic",
+      "Flex": "transferable support/variant topic"
+    },
+    "part_first_policy": "Part filters are more important than topic modules. Default view can show all; the user should be able to tap Part 1 or Part 2 first, then use module jumps if needed. Part 3 may exist as an empty future bucket until content is added.",
+    "part2_followup_policy": "Part 2 follow-up remains inside the same parent cue-card article, but it is not inside the main Answer details. It appears below the main Answer as a second practice unit with its own Follow-up Question, Function, and collapsible Answer.",
+    "timeline_policy": "Timeline mode is a low-priority recall aid, not a primary navigation mode. It sits at the end of the action row. When enabled, it gives a quick view of recently trained questions: global chronological order, newest to oldest, ignoring topic/module grouping. Cards without data-trained-at appear after dated cards and do not display a time badge.",
+    "review_policy": "Review mode is a user-driven recall queue. It sorts question cards by data-reviewed-at: unreviewed first, then oldest reviewed to newest reviewed. It is independent from Timeline, which continues to use data-trained-at. Fact Bank is not part of Review mode."
+  },
+  "interaction_rules": {
+    "answer_blocks": "Use native details/summary. Answers are closed by default.",
+    "random": "Choose from currently visible question cards, scroll to it, highlight briefly, and keep answer closed.",
+    "collapse": "Close all Answer blocks.",
+    "expand": "Open Answer blocks for currently visible question cards only.",
+    "reset": "Clear search, collapse all answers/facts/how-to-use, turn off Timeline mode, restore default order, and scroll to top.",
+    "timeline": "Small control button. Toggle chronological sorting by data-trained-at. Dated cards display compact time chips only in this mode. Undated cards remain last and show no time.",
+    "theme": "Night mode must be low-glare and warm/dim rather than high-contrast pure black/white.",
+    "part_filters": "Part filter buttons should show only the selected IELTS part while preserving search, random, collapse/expand, and timeline behavior. Reset returns to All.",
+    "floating_top": "Use one fixed lower-right chevron-style upward icon button for scroll-to-top. Remove repeated per-card Top links. The floating control should appear only after the user scrolls down and should remain visually quiet.",
+    "review": "Small control button after Timeline. Toggle self-review sorting by data-reviewed-at. Unreviewed question cards appear first; reviewed cards sort oldest to newest. Review mode is independent from Timeline and disabled in Fact Bank mode. In Review mode, cards show a compact badge: Reviewed M/D or Not reviewed yet.",
+    "review_mark_button": "Each question card has one quiet Reviewed button, visible only in Review mode. Clicking it updates that card’s data-reviewed-at timestamp in the current page state and re-sorts visible cards in Review mode. The visible review badge displays only month/day, not the exact time.",
+    "save_html": "Save HTML exports the current trainer as a new single-file HTML with updated data-reviewed-at attributes embedded in the question cards. It does not silently write to disk; the user saves/replaces the exported file as the new source of truth."
+  },
+  "technical_rules": {
+    "single_file": "Keep CSS, JS, and content inline. No network dependencies.",
+    "local_html": "Do not depend on service workers, external JSON, external JS, external CSS, or remote fonts.",
+    "search": "Search uses data-search text on cards. Update this whenever content changes.",
+    "counts": "Update module counts and total status when adding/removing question cards.",
+    "review_storage": "Review timestamps are stored as data-reviewed-at on question cards in the exported HTML, not only in localStorage. Browser localStorage may be used only for non-source-of-truth UI preferences such as theme."
+  },
+  "change_protocol": [
+    "Preserve the minimal visible UI unless the user explicitly asks for a new visible feature.",
+    "Before adding visible fields, explain why they change the training decision or user flow.",
+    "When importing new .md files, add source timestamps only as hidden metadata and Timeline-only chips.",
+    "Always update this hidden spec and changelog when changing product rules, import rules, or visible behavior.",
+    "Preserve existing data-reviewed-at values when adding, updating, reordering, or importing question cards."
+  ],
+  "changelog": [
+    {
+      "version": "v23.2-review-button-scoped",
+      "date": "2026-06-16",
+      "changes": [
+        "Changed per-card Reviewed controls so they are visible only in Review mode.",
+        "Kept Review badges visible only in Review mode and preserved sorting, Save HTML, Timeline, and existing card content."
+      ]
+    },
+    {
+      "version": "v23.1-review-date-badges",
+      "date": "2026-06-16",
+      "changes": [
+        "Changed Review-mode card badges to show Reviewed M/D for reviewed cards and Not reviewed yet for unreviewed cards.",
+        "Kept exact data-reviewed-at timestamps embedded for sorting and Save HTML export, but hid exact time from the visible UI.",
+        "Preserved existing Review sorting, Save HTML export, Timeline behavior, card content, and Fact Bank behavior."
+      ]
+    },
+    {
+      "version": "v23-review-mode",
+      "date": "2026-06-16",
+      "changes": [
+        "Added Review mode after Timeline for self-review ordering: unreviewed cards first, then oldest reviewed to newest reviewed.",
+        "Added one Reviewed button per question card to update data-reviewed-at in the current page state.",
+        "Added Save HTML export so updated review timestamps can be embedded into a new single-file HTML mother copy.",
+        "Kept Timeline based on data-trained-at and preserved existing visible content, filters, search, random, collapse/expand, reset, Fact Bank, and answer behavior."
+      ]
+    },
+    {
+      "version": "v22-planning-weight-control-import",
+      "date": "2026-06-14",
+      "changes": [
+        "Added a new Part 1 Planning & weight control card from the latest Manual Chunk Coach MD.",
+        "Added a Fact Bank item for planning meals/calories and weight-control material.",
+        "Skipped updating the existing Free time & reading card because the new reading detail was not confirmed as a stable complete answer.",
+        "No visible UI changes."
+      ]
+    },
+    {
+      "version": "v21-sleep-habit-import",
+      "date": "2026-06-14",
+      "changes": [
+        "Updated the existing Part 1 Sleep & energy card with the latest trained sleep answer.",
+        "Added the source-supported Alternative: maintain that routine -> make it a point to keep that habit.",
+        "Updated the Sleep for brain and energy Fact Bank item.",
+        "Preserved the visible lightweight UI, Part-first navigation, hidden Answer blocks, Timeline behavior, and floating chevron top button."
+      ]
+    },
+    {
+      "version": "v20-travelling-food-import",
+      "date": "2026-06-14",
+      "changes": [
+        "Added one Part 1 card: Travelling & food.",
+        "Applied the user-confirmed complete revision rule after the user used the scenery-to-sights alternative and the Coach confirmed it.",
+        "Preserved the old/new scenery wording as Alternative.",
+        "Added one Fact Bank item for travelling mainly for food rather than scenery or sights.",
+        "Kept the v18 floating chevron Top control and all visible UI behavior unchanged."
+      ]
+    },
+    {
+      "version": "v19-shopping-preference-import",
+      "date": "2026-06-14",
+      "changes": [
+        "Added one Part 1 card: Online shopping & sellers.",
+        "Applied the user-confirmed complete revision rule for the final answer.",
+        "Preserved the old/new seller wording as Alternative.",
+        "Updated the Introverted personality & friends Fact Bank item with reusable shopping communication material.",
+        "Kept the v18 floating chevron Top control and all visible UI behavior unchanged."
+      ]
+    },
+    {
+      "version": "v15",
+      "date": "2026-06-11",
+      "changes": [
+        "No visible UI/content changes.",
+        "Added SYSTEM_ARCHITECTURE_BASELINE / system_architecture_baseline to the hidden maintenance spec.",
+        "Recorded the roles of Manual Chunk Coach, Mock Examiner, HTML Trainer Builder, and the visible HTML Trainer.",
+        "Recorded the full training data flow: Mock diagnosis -> Manual training -> MD export -> Builder import -> HTML reconstruction practice.",
+        "Clarified source authority and future-window modification protocol at the system level.",
+        "Kept future-stage ideas parked in Future Consideration rather than routine import logic."
+      ]
+    },
+    {
+      "version": "v14",
+      "date": "2026-06-11",
+      "changes": [
+        "No visible UI/content changes.",
+        "Aligned hidden maintenance rules with HTML Trainer Builder v1.3.",
+        "Added active Builder current workflow: clean extraction, Function quality, Part 3 handling, Fact Bank rules, and import reporting.",
+        "Added Future Consideration section to park Error Watchlist, Weak/Strong review, spaced review, and visible coverage dashboard as later-stage ideas.",
+        "Clarified Coverage Summary belongs to the Builder chat import report only, not the visible HTML page.",
+        "Clarified Part 3 import should prioritize abstract Function patterns plus short spoken answers."
+      ]
+    },
+    {
+      "version": "v13",
+      "date": "2026-06-10",
+      "changes": [
+        "No visible UI/content changes.",
+        "Added hidden ORAL_TRAINING_THEORY_BASELINE based on the uploaded oral-training book review.",
+        "Specified that theory is a design baseline only: it guides future Custom GPT imports and should not appear as visible teaching content by default.",
+        "Reinforced the controlled reconstruction loop: Question + Function -> user reconstruction -> hidden Answer calibration.",
+        "Clarified Personal Fact Bank as a reusable concept-material bank, not a vocabulary list or transcript archive."
+      ]
+    },
+    {
+      "version": "v10",
+      "changes": [
+        "Moved Timeline to the last action position because it is only an occasional recent-training recall aid.",
+        "Updated Personal Fact Bank with high-reuse facts from recent MD conversations while keeping it collapsed and compact."
+      ]
+    },
+    {
+      "version": "v1",
+      "summary": "Created single-file local HTML trainer from original Markdown."
+    },
+    {
+      "version": "v2",
+      "summary": "Removed redundant top training sentence, collapsed How to use, removed top tag cloud, introduced broad modules."
+    },
+    {
+      "version": "v3",
+      "summary": "Renamed Clear to Reset and added night mode."
+    },
+    {
+      "version": "v4",
+      "summary": "Removed visible source numbering and replaced it with Core/Flex value labels."
+    },
+    {
+      "version": "v5",
+      "summary": "Added hidden maintenance spec for future AI/developer edits."
+    },
+    {
+      "version": "v6",
+      "summary": "Clarified future pipeline direction without changing the visible UI."
+    },
+    {
+      "version": "v7",
+      "summary": "Merged five dated conversation exports into the visible trainer, added Timeline mode, kept Part 2 follow-up attached to its parent cue card, and removed old experiment-specific workflow references from the hidden standard."
+    },
+    {
+      "version": "v8",
+      "summary": "Added Part-first filter buttons, updated module navigation hierarchy, and restructured Part 2 follow-up inside the parent cue card as Follow-up Question → Function → Follow-up Answer."
+    },
+    {
+      "version": "v9-fixed-timeline-last-factbank",
+      "date": "2026-06-10",
+      "summary": "Fixed visible AI maintenance text, changed Timeline to global newest-to-oldest order, moved Part 2 follow-up outside the main Answer details while keeping it inside the same parent cue-card card, and reorganized the control area into a calmer Part/Search/Actions/Topics layout."
+    },
+    {
+      "version": "v16-floating-top-button",
+      "date": "2026-06-11",
+      "summary": "Removed repeated per-card Top links and added a single fixed lower-right Top pill button that appears after scrolling."
+    },
+    {
+      "version": "v18-floating-chevron-top",
+      "date": "2026-06-11",
+      "summary": "Changed the fixed scroll-to-top control from a text Top pill to a quiet upward arrow icon while preserving the same behavior."
+    }
+  ],
+  "v9_corrections": {
+    "hidden_spec_policy": "Maintenance notes must not render in the visible page. Use HTML comments and application/json script blocks only.",
+    "timeline_policy": "Timeline mode is a low-priority recall aid, not a primary navigation mode. It sits at the end of the action row. When enabled, it gives a quick view of recently trained questions: global chronological order, newest to oldest, ignoring topic/module grouping. Cards without data-trained-at appear after dated cards and do not display a time badge.",
+    "followup_policy": "Part 2 follow-up remains inside the same parent cue-card article, but it is not inside the main Answer details. It appears below the main Answer as a second practice unit with its own Follow-up Question, Function, and collapsible Answer.",
+    "control_ui_policy": "Controls should be visually calm and grouped: Part tabs first, search second, action toolbar third, topic chips fourth. Avoid noisy or unbalanced button rows."
+  },
+  "fact_bank_navigation_policy": "Personal Fact Bank is a top-level mode beside All / Part 1 / Part 2 / Part 3. It should not appear as a bottom appendix during normal question practice. It is opened intentionally when the user wants reusable personal material.",
+  "personal_fact_bank_policy": "Keep only high-reuse personal facts that can support multiple IELTS questions. Group facts into broad life-material categories, not fine-grained tags. Default question practice should not display Fact Bank.",
+  "navigation_priority": "Top-level navigation: All / Part 1 / Part 2 / Part 3 / Fact Bank. Inside Part modes, topic jumps are secondary. Inside Fact Bank mode, category jumps may be shown.",
+  "change_log": [
+    {
+      "version": "v23.2-review-button-scoped",
+      "date": "2026-06-16",
+      "changes": [
+        "Changed per-card Reviewed controls so they are visible only in Review mode.",
+        "Kept Review badges visible only in Review mode and preserved sorting, Save HTML, Timeline, and existing card content."
+      ]
+    },
+    {
+      "version": "v23.1-review-date-badges",
+      "date": "2026-06-16",
+      "changes": [
+        "Changed Review-mode card badges to show Reviewed M/D for reviewed cards and Not reviewed yet for unreviewed cards.",
+        "Kept exact data-reviewed-at timestamps embedded for sorting and Save HTML export, but hid exact time from the visible UI.",
+        "Preserved existing Review sorting, Save HTML export, Timeline behavior, card content, and Fact Bank behavior."
+      ]
+    },
+    {
+      "version": "v23-review-mode",
+      "date": "2026-06-16",
+      "changes": [
+        "Added Review mode after Timeline for self-review ordering: unreviewed cards first, then oldest reviewed to newest reviewed.",
+        "Added one Reviewed button per question card to update data-reviewed-at in the current page state.",
+        "Added Save HTML export so updated review timestamps can be embedded into a new single-file HTML mother copy.",
+        "Kept Timeline based on data-trained-at and preserved existing visible content, filters, search, random, collapse/expand, reset, Fact Bank, and answer behavior."
+      ]
+    },
+    {
+      "version": "v22-planning-weight-control-import",
+      "date": "2026-06-14",
+      "changes": [
+        "Added a new Part 1 Planning & weight control card from the latest Manual Chunk Coach MD.",
+        "Added a Fact Bank item for planning meals/calories and weight-control material.",
+        "Skipped updating the existing Free time & reading card because the new reading detail was not confirmed as a stable complete answer.",
+        "No visible UI changes."
+      ]
+    },
+    {
+      "version": "v21-sleep-habit-import",
+      "date": "2026-06-14",
+      "changes": [
+        "Updated the existing Part 1 Sleep & energy card from the latest Manual Chunk Coach MD.",
+        "Updated the Sleep for brain and energy Fact Bank item with the accepted habit wording.",
+        "No visible UI changes."
+      ]
+    },
+    {
+      "version": "v20-travelling-food-import",
+      "date": "2026-06-14",
+      "summary": "Imported one Part 1 travelling-for-food card from a Manual Chunk Coach export, added a compact Travel for food Fact Bank item, preserved source-supported Alternative wording, and kept the existing lightweight UI."
+    },
+    {
+      "version": "v19-shopping-preference-import",
+      "date": "2026-06-14",
+      "summary": "Imported one Part 1 online-shopping preference card from a Manual Chunk Coach export, updated the introverted-personality Fact Bank item with seller-communication material, and preserved the existing lightweight UI."
+    },
+    {
+      "version": "v16",
+      "date": "2026-06-11",
+      "changes": [
+        "Replaced repeated per-card Top links with one fixed lower-right floating scroll-to-top control.",
+        "Floating arrow appears only after scrolling down and smoothly returns to the page top.",
+        "Visible card content, navigation, answers, Fact Bank, and training data remain unchanged.",
+        "Updated hidden interaction rules so future edits preserve a single low-clutter scroll-to-top control."
+      ]
+    },
+    {
+      "version": "v15",
+      "date": "2026-06-11",
+      "changes": [
+        "No visible UI/content changes.",
+        "Added SYSTEM_ARCHITECTURE_BASELINE / system_architecture_baseline to the hidden maintenance spec.",
+        "Recorded the roles of Manual Chunk Coach, Mock Examiner, HTML Trainer Builder, and the visible HTML Trainer.",
+        "Recorded the full training data flow: Mock diagnosis -> Manual training -> MD export -> Builder import -> HTML reconstruction practice.",
+        "Clarified source authority and future-window modification protocol at the system level.",
+        "Kept future-stage ideas parked in Future Consideration rather than routine import logic."
+      ]
+    },
+    {
+      "version": "v14",
+      "date": "2026-06-11",
+      "changes": [
+        "No visible UI/content changes.",
+        "Aligned hidden maintenance rules with HTML Trainer Builder v1.3.",
+        "Added active Builder current workflow: clean extraction, Function quality, Part 3 handling, Fact Bank rules, and import reporting.",
+        "Added Future Consideration section to park Error Watchlist, Weak/Strong review, spaced review, and visible coverage dashboard as later-stage ideas.",
+        "Clarified Coverage Summary belongs to the Builder chat import report only, not the visible HTML page.",
+        "Clarified Part 3 import should prioritize abstract Function patterns plus short spoken answers."
+      ]
+    },
+    {
+      "version": "v13",
+      "date": "2026-06-10",
+      "changes": [
+        "No visible UI/content changes.",
+        "Added hidden ORAL_TRAINING_THEORY_BASELINE based on the uploaded oral-training book review.",
+        "Specified that theory is a design baseline only: it guides future Custom GPT imports and should not appear as visible teaching content by default.",
+        "Reinforced the controlled reconstruction loop: Question + Function -> user reconstruction -> hidden Answer calibration.",
+        "Clarified Personal Fact Bank as a reusable concept-material bank, not a vocabulary list or transcript archive."
+      ]
+    },
+    {
+      "version": "v12",
+      "date": "2026-06-10",
+      "summary": "Kept Personal Fact Bank intentionally compact and fixed Random button so it is visually neutral by default, not selected/primary."
+    },
+    {
+      "version": "v11",
+      "changes": [
+        "Moved Personal Fact Bank into the top-level navigation as a dedicated mode after Part 3.",
+        "Fact Bank no longer appears as a bottom appendix in normal question practice.",
+        "Grouped facts into broad reusable-material categories.",
+        "Adjusted search/status/random/expand/collapse logic to support Fact Bank mode."
+      ]
+    }
+  ],
+  "oral_training_theory_baseline": {
+    "status": "hidden_design_baseline_only_not_visible_ui_content",
+    "source_book": "Ci Ba Tian Xia / Xiang Xue Yu We - Lou Wu uploaded text, used as conceptual reference for oral-training design only.",
+    "scope": "This theory baseline guides future Custom GPT imports and HTML updates. It must not be expanded into visible teaching notes unless the user explicitly asks.",
+    "core_claims": [
+      "The product is an IELTS 6.5 oral reconstruction trainer, not a memorization deck, not a free-chat practice log, and not an Anki-style scheduler.",
+      "Avoid encouraging random or premature open-ended speaking without a corrected model; uncontrolled errors can become stable habits.",
+      "Speaking output should be trained through a controlled loop: concept planning -> English formulation -> oral attempt -> model-answer calibration -> repeated reconstruction.",
+      "Question + Function exists to train the conceptualizer/preverbal-message stage: the user should decide what information and logic to package before looking at language.",
+      "Answer is calibration material. It stays hidden by default because immediate exposure encourages reading or memorization instead of reconstruction.",
+      "Reusable chunks are repair and transfer material. Keep them short, high-value, and hidden inside Answer or Fact Bank; do not turn them into large lists.",
+      "Personal Fact Bank is a reusable concept-material bank, not a vocabulary notebook and not a complete archive of every conversation detail.",
+      "For IELTS 6.5, prioritize stable coherence, natural spoken wording, controlled grammar, and reusable personal material over advanced vocabulary or native-like complexity."
+    ],
+    "mapping_to_html_structure": {
+      "Question": "Exam trigger. It starts the reconstruction task.",
+      "Function": "Conceptual/logical route for the answer. It should be concise and visible by default.",
+      "Answer": "Model/calibration layer. Hidden by default; revealed only after the user attempts reconstruction.",
+      "Follow_up": "If connected to a Part 2 cue card, it remains inside the same parent card but uses its own Question -> Function -> Answer mini-structure.",
+      "Personal_Fact_Bank": "Separate top-level material bank for reusable life facts, grouped by broad life categories.",
+      "Timeline": "Secondary recall tool for recently trained questions; not a primary training mode."
+    },
+    "import_implications_for_future_custom_gpt": [
+      "When reading raw .md conversation exports, identify the final accepted/practiced version instead of summarizing every attempt.",
+      "If a user rejected a wording as unnatural, do not preserve it as Final answer; place it only as Old/Alternative context if useful.",
+      "Do not add every grammar explanation into visible cards. Add only concise notes when they directly affect oral reconstruction.",
+      "Do not add large collocation/sentence-frame inventories. Add only reusable chunks the user can actually say.",
+      "New facts should enter Personal Fact Bank only if they can support multiple IELTS prompts.",
+      "If adding theory-derived rules, update this hidden spec rather than visible UI."
+    ],
+    "anti_patterns": [
+      "Turning the site into a textbook summary of oral-training theory.",
+      "Turning the site into a full transcript archive.",
+      "Adding long visible explanations under every card.",
+      "Replacing the user-practiced answer with a more polished but untrained AI rewrite.",
+      "Prioritizing advanced expressions over sayable, stable Band 6.5 spoken output."
+    ]
+  },
+  "builder_current_workflow": {
+    "status": "active_routine_workflow_for_future_imports",
+    "summary": "Routine imports should focus on clean extraction, Function quality, HTML merge, hidden metadata, and chat import reporting. Visible HTML stays lightweight unless the user explicitly asks for a visible product change.",
+    "steps": [
+      "Read latest HTML and hidden AI_MAINTENANCE_SPEC as product contract.",
+      "Read new Manual Chunk Coach .md files as content evidence.",
+      "Extract stable accepted/practiced final answers only.",
+      "Create the clearest compact Function from the final answer structure; preserve source Function only when aligned.",
+      "Keep Alternative optional and source-supported.",
+      "Keep Part 2 follow-ups inside parent cue card with their own Follow-up Question / Function / Answer.",
+      "For Part 3, prioritize abstract discussion Functions plus short stable answers and reusable chunks.",
+      "Update Personal Fact Bank only for high-reuse personal facts.",
+      "Show complete added/updated content and Coverage Summary in chat import report.",
+      "Update hidden spec/changelog when product or import rules change."
+    ]
+  },
+  "part3_import_policy": {
+    "status": "active_when_part3_md_content_exists",
+    "goal": "Part 3 cards should train abstract answer organization, not memorized long essays.",
+    "preferred_function_patterns": [
+      "opinion -> reason -> example -> conclusion",
+      "cause -> effect -> example",
+      "past vs now -> reason -> result",
+      "benefit -> limitation -> balanced view",
+      "problem -> cause -> solution",
+      "personal view -> social explanation"
+    ],
+    "visible_structure": "Question -> Function -> hidden Answer -> reusable chunks, same as other cards but with a more abstract Function."
+  },
+  "import_report_policy": {
+    "status": "active_for_html_builder_outputs",
+    "purpose": "Let the user audit changes in ChatGPT before downloading/opening the HTML.",
+    "must_show_in_chat": [
+      "Added cards with full Question / Function / Final answer / chunks.",
+      "Updated cards with changed field and before/after when answer text changes.",
+      "Fact Bank additions/updates.",
+      "Coverage Summary: counts by Part 1 / Part 2 / Part 3 / Fact Bank / skipped or review-required.",
+      "Skipped items and short reasons."
+    ],
+    "coverage_summary_visibility": "Coverage Summary belongs to the chat import report only. It is not a visible HTML page section."
+  },
+  "future_consideration": {
+    "status": "parked_not_routine",
+    "purpose": "Store possible later-stage ideas without making the Builder evaluate or implement them during routine imports.",
+    "revisit_condition": "Only revisit if the user explicitly says the system has reached a later stage or asks to discuss/implement future-stage features.",
+    "possible_later_stage_ideas": [
+      {
+        "name": "Error Watchlist",
+        "when_it_might_fit": "Later, after the user can express ideas relatively freely and wants to monitor recurring fossilized errors rather than early broken-English attempts.",
+        "current_status": "future consideration only; no visible button or page section."
+      },
+      {
+        "name": "Weak / Strong review status",
+        "when_it_might_fit": "Later, if the HTML bank becomes large enough that manual active review becomes inefficient.",
+        "current_status": "future consideration only."
+      },
+      {
+        "name": "spaced review or scheduler logic",
+        "when_it_might_fit": "Later, if the user explicitly wants system-guided review rather than active self-directed reconstruction.",
+        "current_status": "future consideration only."
+      },
+      {
+        "name": "visible coverage dashboard",
+        "when_it_might_fit": "Later, if the bank becomes large and the user wants an in-page progress overview.",
+        "current_status": "future consideration only; current Coverage Summary stays in import report chat."
+      }
+    ]
+  },
+  "system_architecture_baseline": {
+    "status": "active hidden architecture contract",
+    "purpose": "Give future ChatGPT windows and future HTML Trainer Builder runs a concise map of the whole IELTS Speaking 6.5 training system, so the user does not need to re-explain component roles, learning principles, or modification direction.",
+    "system_identity": {
+      "name": "IELTS Speaking 6.5 reconstruction-based training system",
+      "summary": "A lightweight course-and-training workflow for building stable IELTS Speaking Band 6.5 output through coached refinement, active reconstruction, HTML material review, and mock-exam diagnosis.",
+      "not_a": "Not a random question bank, not an Anki deck, not a passive review scheduler, not a grammar encyclopedia, and not a visible theory course."
+    },
+    "core_learning_loop": [
+      "1. Manual Chunk Coach helps the learner turn raw/broken spoken attempts into stable trained answers.",
+      "2. Conversation MD logs are exported from Manual Chunk Coach sessions.",
+      "3. HTML Trainer Builder reads the latest HTML plus new MD logs and merges only stable, useful training material.",
+      "4. The updated HTML Trainer becomes the portable reconstruction interface.",
+      "5. The learner practices by viewing Question + Function, reconstructing the answer mentally/orally, then opening Answer only for calibration.",
+      "6. Mock Examiner is used periodically for test-style diagnosis and next training direction."
+    ],
+    "components": {
+      "manual_chunk_coach": {
+        "role": "Main training and refinement environment.",
+        "responsibilities": [
+          "Train answers through spoken/manual coaching.",
+          "Help refine raw attempts into stable spoken answers.",
+          "Generate conversation MD logs containing raw attempts, refined answers, optional alternatives, optional function patterns, follow-ups, useful chunks, and possible personal facts."
+        ],
+        "not_responsible_for": [
+          "Maintaining the HTML file.",
+          "Acting as the long-term material database.",
+          "Making final product/UI structure decisions."
+        ]
+      },
+      "mock_examiner": {
+        "role": "Test simulation and diagnosis environment.",
+        "responsibilities": [
+          "Simulate IELTS Speaking test conditions.",
+          "Diagnose weaknesses across Part 1, Part 2, and Part 3.",
+          "Suggest next training targets."
+        ],
+        "not_responsible_for": [
+          "Producing final answer cards by default.",
+          "Updating the HTML directly.",
+          "Replacing Manual Chunk Coach training."
+        ]
+      },
+      "html_trainer_builder": {
+        "role": "Conversation-MD-to-HTML cleaning and integration tool.",
+        "responsibilities": [
+          "Read latest HTML and this hidden spec as the product contract.",
+          "Read new Manual Chunk Coach MD logs as primary content evidence.",
+          "Extract stable trained answers only.",
+          "Improve or infer Function patterns from the final answer structure when useful.",
+          "Keep Alternative optional and source-supported only.",
+          "Update Part 1, Part 2, Part 3, and Personal Fact Bank content.",
+          "Preserve the visible lightweight HTML design.",
+          "Output a new single-file HTML plus a complete import report in chat."
+        ],
+        "not_responsible_for": [
+          "Teaching during import.",
+          "Acting as Mock Examiner.",
+          "Expanding the visible page into a complex review platform unless the user explicitly asks for a future-stage redesign."
+        ]
+      },
+      "html_trainer_visible_page": {
+        "role": "Final lightweight training interface.",
+        "responsibilities": [
+          "Support active reconstruction: Question + Function -> learner reconstructs -> Answer calibration -> repeat.",
+          "Provide Part-first navigation: All / Part 1 / Part 2 / Part 3 / Fact Bank.",
+          "Provide lightweight tools: Search, Random, Collapse, Expand, Reset, Timeline.",
+          "Provide an independent Personal Fact Bank for high-reuse personal material.",
+          "Provide lightweight review support: user marks a card Reviewed, Review mode sorts by last review, shows compact Reviewed M/D or Not reviewed yet badges, and Save HTML embeds data-reviewed-at in the exported source file."
+        ],
+        "not_responsible_for": [
+          "Scheduling reviews.",
+          "Scoring speaking performance.",
+          "Explaining learning theory on the visible page.",
+          "Displaying import reports or development notes."
+        ]
+      }
+    },
+    "data_flow": [
+      "Mock Examiner diagnoses weaknesses and suggests next training focus when needed.",
+      "Manual Chunk Coach trains/refines answers and produces MD conversation logs.",
+      "HTML Trainer Builder imports the new MD logs into the latest HTML.",
+      "The updated HTML becomes the new portable product baseline.",
+      "The learner uses the HTML Trainer for active reconstruction, recent Timeline checks, Random practice, and Fact Bank review."
+    ],
+    "source_authority": [
+      "1. Current HTML visible UI + this hidden maintenance spec = product and UI authority.",
+      "2. Original Manual Chunk Coach MD logs = primary content evidence.",
+      "3. Mock Examiner logs = diagnostic evidence, not answer-card authority by default.",
+      "4. External summaries, old TSV/card exports, or temporary tables = optional one-time references only when explicitly provided.",
+      "5. AI inference = lowest authority and should be reported when it affects Function, grouping, or uncertain content."
+    ],
+    "current_stage_principle": "The current stage is lightweight reconstruction for IELTS Speaking 6.5. The priority is quick mental organization from Question + Function and calibration with stable answers. Do not turn the visible page into a complex review, statistics, or theory platform.",
+    "future_consideration_bridge": "Later-stage ideas such as Error Watchlist, Weak/Strong status, spaced review logic, visible progress dashboard, and large-scale error statistics are parked in future_consideration. They are not part of routine imports or visible UI decisions unless the user explicitly asks to revisit future-stage features.",
+    "modification_protocol_for_future_windows": [
+      "Before modifying this HTML, read AI_MAINTENANCE_SPEC.",
+      "Preserve the visible lightweight design unless the user explicitly asks for visible UI changes.",
+      "Keep Part-first navigation.",
+      "Keep Fact Bank as an independent top-level material library.",
+      "Keep Answer hidden by default.",
+      "Keep Function visible and useful for mental reconstruction.",
+      "Keep Part 2 follow-up questions inside the parent cue card using the same Question / Function / Answer logic.",
+      "Keep Coverage Summary in the Builder chat report, not in the visible HTML page.",
+      "Update this hidden spec and changelog when architecture-level rules change."
+    ]
+  }
+}
+</script>
+<script>
+(function() {
+  try {
+    const saved = localStorage.getItem('ielts-trainer-theme');
+    const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    document.documentElement.dataset.theme = saved || (prefersDark ? 'dark' : 'light');
+  } catch (e) {
+    document.documentElement.dataset.theme = 'light';
+  }
+})();
+</script>
+<style>
+  :root {
+    --bg: #f7f4ef;
+    --paper: #fffaf2;
+    --input: #ffffff;
+    --ink: #181612;
+    --muted: #726a5f;
+    --line: #e4dacd;
+    --soft: #eee5d9;
+    --accent: #2d2923;
+    --accent-ink: #ffffff;
+    --shadow: rgba(20, 16, 12, 0.08);
+    --green: #eef7ed;
+    --orange: #fff3dc;
+    --answer-line: #e1c790;
+    --answer-wash: rgba(255,255,255,.35);
+    --focus: rgba(183,169,148,.18);
+    --core: #efe0bf;
+    --flex: #e6edf7;
+  }
+  html[data-theme="dark"] {
+    --bg: #11100f;
+    --paper: #1d1b19;
+    --input: #171615;
+    --ink: #eee8df;
+    --muted: #aaa096;
+    --line: #36312c;
+    --soft: #2b2723;
+    --accent: #eee8df;
+    --accent-ink: #11100f;
+    --shadow: rgba(0,0,0,.32);
+    --green: #172418;
+    --orange: #2a2116;
+    --answer-line: #5a4423;
+    --answer-wash: rgba(255,255,255,.045);
+    --focus: rgba(238,232,223,.14);
+    --core: #3a2d19;
+    --flex: #1e2b3a;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", system-ui, sans-serif;
+    line-height: 1.55;
+    -webkit-text-size-adjust: 100%;
+  }
+  a { color: inherit; }
+  .shell { max-width: 900px; margin: 0 auto; padding: 14px 14px 80px; }
+  header { padding: 14px 4px 10px; }
+  .header-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+  .title-wrap { min-width: 0; }
+  .theme-toggle {
+    width: 38px;
+    height: 38px;
+    flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    padding: 0;
+    font-size: 17px;
+    line-height: 1;
+  }
+  .eyebrow { color: var(--muted); font-size: 12px; letter-spacing: .05em; text-transform: uppercase; margin-bottom: 5px; }
+  h1 { font-size: 25px; line-height: 1.12; margin: 0; letter-spacing: -0.02em; }
+  h2 { font-size: 20px; line-height: 1.2; margin: 0; letter-spacing: -0.01em; }
+  h3 { font-size: 12px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin: 0 0 6px; }
+  h4 { font-size: 15px; margin: 16px 0 6px; color: var(--accent); }
+  p { margin: 0 0 10px; }
+  ul, ol { margin: 6px 0 12px 22px; padding: 0; }
+  li { margin: 4px 0; }
+  .controls {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    box-shadow: 0 10px 30px var(--shadow);
+    padding: 12px;
+    margin: 10px 0 12px;
+  }
+  .search-row { display: flex; gap: 8px; align-items: center; }
+  input[type="search"] {
+    width: 100%;
+    border: 1px solid var(--line);
+    background: var(--input);
+    color: var(--ink);
+    border-radius: 14px;
+    padding: 11px 12px;
+    font-size: 16px;
+    outline: none;
+  }
+  input[type="search"]:focus { border-color: #b7a994; box-shadow: 0 0 0 3px var(--focus); }
+  .button-row, .module-jump { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 9px; }
+  button, .jump-link {
+    border: 1px solid var(--line);
+    background: var(--input);
+    color: var(--ink);
+    padding: 8px 10px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 650;
+    text-decoration: none;
+    box-shadow: 0 1px 2px var(--shadow);
+    -webkit-tap-highlight-color: transparent;
+  }
+  button.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+  button:active, .jump-link:active { transform: translateY(1px); }
+  .status { color: var(--muted); font-size: 12px; margin-top: 8px; }
+  .info-details { padding: 0; overflow: hidden; }
+  .info-details > summary { cursor: pointer; padding: 13px 15px; font-weight: 800; user-select: none; list-style: none; }
+  .info-details > summary::-webkit-details-marker { display: none; }
+  .info-details > summary::before { content: '▶'; margin-right: 8px; font-size: 11px; display: inline-block; transition: transform .12s ease; }
+  .info-details[open] > summary::before { transform: rotate(90deg); }
+  .info-details > div { border-top: 1px solid var(--line); padding: 12px 15px; }
+  .section-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+    margin: 22px 4px 8px;
+    scroll-margin-top: 16px;
+  }
+  .section-heading span { color: var(--muted); font-size: 12px; white-space: nowrap; }
+  .card {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 22px;
+    box-shadow: 0 10px 30px var(--shadow);
+    padding: 16px;
+    margin: 12px 0;
+    scroll-margin-top: 18px;
+  }
+  .card.highlight { outline: 3px solid rgba(47, 42, 36, .16); }
+  .card-top { display: flex; gap: 10px; justify-content: space-between; align-items: flex-start; margin-bottom: 13px; }
+  .title-block { min-width: 0; }
+  .meta-row { display: flex; align-items: center; gap: 6px; margin-bottom: 7px; min-height: 20px; }
+  .value-badge {
+    display: inline-block;
+    color: var(--ink);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 2px 8px;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: .02em;
+  }
+  .value-badge.core { background: var(--core); }
+  .value-badge.flex { background: var(--flex); }
+  .prompt-block, .function-block {
+    border-radius: 16px;
+    padding: 13px 13px 10px;
+    margin: 10px 0;
+    border: 1px solid var(--line);
+  }
+  .prompt-block { background: var(--input); }
+  .function-block { background: var(--green); }
+  .answer-block {
+    margin-top: 12px;
+    border: 1px solid var(--answer-line);
+    border-radius: 17px;
+    background: var(--orange);
+    overflow: hidden;
+  }
+  .answer-block > summary {
+    cursor: pointer;
+    user-select: none;
+    list-style: none;
+    padding: 14px 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 850;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .answer-block > summary::-webkit-details-marker { display: none; }
+  .answer-block > summary::before { content: '▶'; font-size: 12px; display: inline-block; transition: transform .12s ease; }
+  .answer-block[open] > summary::before { transform: rotate(90deg); }
+  .answer-content { border-top: 1px solid var(--answer-line); padding: 0 15px 14px; background: var(--answer-wash); }
+  .fact-card {
+    background: var(--input);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 0;
+    margin: 10px 0;
+    overflow: hidden;
+  }
+  .fact-card > summary { cursor: pointer; padding: 13px 14px; font-weight: 800; user-select: none; }
+  .fact-card > div { border-top: 1px solid var(--line); padding: 12px 14px; }
+  .empty { display: none; text-align: center; color: var(--muted); padding: 26px 0; }
+  .footer-note { color: var(--muted); font-size: 12px; text-align: center; margin-top: 24px; }
+
+
+  .part-tabs {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    margin-top: 10px;
+  }
+  .part-filter {
+    font-size: 13px;
+    font-weight: 850;
+    padding: 10px 8px;
+  }
+  .part-filter.active {
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--accent);
+  }
+  html[data-theme="dark"] .part-filter.active { color: #14110d; }
+  .module-jump { margin-top: 10px; }
+  .followup-block {
+    margin-top: 16px;
+    padding: 13px;
+    border: 1px dashed var(--border);
+    border-radius: 16px;
+    background: var(--soft);
+  }
+  .followup-block .prompt-block,
+  .followup-block .function-block {
+    margin: 8px 0;
+    padding: 11px 12px 9px;
+  }
+  .followup-label {
+    display: inline-flex;
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    margin-bottom: 7px;
+  }
+
+  .time-badge { display: none; align-items: center; border-radius: 999px; padding: 3px 8px; font-size: 11px; color: var(--muted); background: var(--soft); border: 1px solid var(--border); }
+  body.timeline-mode .time-badge { display: inline-flex; }
+  .timeline-on #timelineBtn, body.timeline-mode #timelineBtn { border-color: var(--accent); color: var(--accent); }
+
+
+  /* v9 control polish */
+  .controls {
+    padding: 13px;
+  }
+  .part-tabs {
+    margin-top: 0;
+    margin-bottom: 10px;
+  }
+  .search-row { margin: 0; }
+  .search-row input {
+    background: var(--paper);
+  }
+  .action-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(76px, 1fr));
+    gap: 7px;
+    margin-top: 10px;
+  }
+  .action-row button {
+    padding: 9px 6px;
+    font-size: 12px;
+    box-shadow: none;
+  }
+  .action-row button.primary {
+    background: var(--accent);
+    color: var(--accent-ink);
+    border-color: var(--accent);
+  }
+  #timelineBtn.timeline-active {
+    background: var(--soft);
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+  .module-jump {
+    margin-top: 10px;
+    gap: 6px;
+  }
+  .module-jump .jump-link {
+    padding: 7px 9px;
+    font-size: 12px;
+    box-shadow: none;
+    opacity: .92;
+  }
+  .status {
+    margin-top: 9px;
+    text-align: left;
+  }
+  .timeline-section .section-heading h2::after {
+    content: ' · ignores topics';
+    color: var(--muted);
+    font-size: 12px;
+    font-weight: 650;
+  }
+  .followup-block {
+    margin-top: 12px;
+    padding-top: 14px;
+    border: 0;
+    border-top: 1px solid var(--line);
+    border-radius: 0;
+    background: transparent;
+  }
+  .followup-label {
+    display: inline-flex;
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    margin: 0 0 7px 2px;
+  }
+  .followup-answer-block {
+    margin-top: 10px;
+  }
+  @media (max-width: 380px) {
+    .action-row { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  }
+
+  .section-intro { margin: -4px 0 14px; color: var(--muted); font-size: 13px; line-height: 1.55; }
+  .fact-group { margin: 16px 0 20px; }
+  .fact-group-heading { margin: 0 0 10px; padding: 0 2px; }
+  .fact-group-heading h3 { margin: 0 0 4px; font-size: 16px; letter-spacing: -0.01em; }
+  .fact-group-heading p { margin: 0; color: var(--muted); font-size: 12px; line-height: 1.45; }
+  .part-filter[data-part-filter="facts"] { min-width: 92px; }
+
+
+  /* v23 review mode controls */
+  .review-section .section-heading h2::after {
+    content: ' · unreviewed first';
+    color: var(--muted);
+    font-size: 12px;
+    font-weight: 650;
+  }
+  #reviewBtn.review-active {
+    background: var(--soft);
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+  #saveHtmlBtn.unsaved {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+  .review-actions {
+    flex: 0 0 auto;
+    display: none;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 6px;
+    margin-left: auto;
+  }
+  body.review-mode .review-actions { display: inline-flex; }
+  .review-btn {
+    padding: 6px 9px;
+    font-size: 12px;
+    box-shadow: none;
+    white-space: nowrap;
+  }
+  .review-date-badge {
+    display: none;
+    align-items: center;
+    border-radius: 999px;
+    padding: 3px 8px;
+    font-size: 11px;
+    color: var(--muted);
+    background: var(--soft);
+    border: 1px solid var(--line);
+    white-space: nowrap;
+  }
+  body.review-mode .review-date-badge { display: inline-flex; }
+  body.review-mode .review-btn {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+
+  /* v18 floating chevron scroll-to-top control */
+  .floating-top {
+    position: fixed;
+    right: max(14px, env(safe-area-inset-right));
+    bottom: max(18px, env(safe-area-inset-bottom));
+    z-index: 40;
+    width: 42px;
+    height: 42px;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    border: 1px solid var(--line);
+    background: color-mix(in srgb, var(--paper) 92%, var(--line));
+    color: var(--ink);
+    box-shadow: 0 10px 22px var(--shadow);
+    opacity: 0;
+    transform: translateY(10px);
+    pointer-events: none;
+    transition: opacity .16s ease, transform .16s ease, box-shadow .16s ease;
+  }
+  .floating-top svg {
+    width: 18px;
+    height: 18px;
+    stroke: currentColor;
+    stroke-width: 2.35;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    fill: none;
+  }
+  .floating-top.visible {
+    opacity: .92;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+  .floating-top:hover { box-shadow: 0 12px 26px var(--shadow); }
+  .floating-top:active { transform: translateY(1px); }
+
+</style>
+</head>
+<body>
+<div class="shell" id="top">
+<header>
+<div class="header-row">
+<div class="title-wrap">
+<div class="eyebrow">Local HTML · Part 1 + Part 2</div>
+<h1>IELTS Speaking Reconstruction Bank</h1>
+</div>
+<button aria-label="Switch to night mode" class="theme-toggle" id="themeToggle" title="Night mode" type="button">☾</button>
+</div>
+</header>
+<section aria-label="Controls" class="controls"><div aria-label="IELTS part filters" class="part-tabs"><button class="part-filter active" data-part-filter="all" type="button">All</button><button class="part-filter" data-part-filter="part1" type="button">Part 1</button><button class="part-filter" data-part-filter="part2" type="button">Part 2</button><button class="part-filter" data-part-filter="part3" type="button">Part 3</button><button class="part-filter" data-part-filter="facts" type="button">Fact Bank</button></div>
+<div class="search-row">
+<input autocapitalize="off" autocomplete="off" id="search" placeholder="Search questions, answers, or facts…" spellcheck="false" type="search"/>
+</div>
+<div class="action-row"><button id="randomBtn" type="button">Random</button>
+<button id="collapseBtn" type="button">Collapse</button>
+<button id="expandBtn" type="button">Expand</button>
+<button id="resetBtn" type="button">Reset</button>
+<button id="timelineBtn" type="button">Timeline</button>
+<button id="reviewBtn" type="button">Review</button>
+<button id="saveHtmlBtn" type="button">Save HTML</button>
+</div>
+<nav aria-label="Topic sections" class="module-jump"><a class="jump-link" data-part-target="part1" href="#module-daily">Daily</a><a class="jump-link" data-part-target="part1" href="#module-people">People</a><a class="jump-link" data-part-target="part1" href="#module-hometown">Hometown</a><a class="jump-link" data-part-target="part2" href="#module-part2">Cue cards</a><a class="jump-link" data-part-target="facts" href="#facts-study">Study</a><a class="jump-link" data-part-target="facts" href="#facts-people">People</a><a class="jump-link" data-part-target="facts" href="#facts-place">Place</a><a class="jump-link" data-part-target="facts" href="#facts-growth">Growth</a></nav>
+<div class="status" id="status">Showing 15 / 15 questions</div>
+</section>
+<details class="card info-details">
+<summary>How to use</summary>
+<div><p>For each question:</p>
+<ol>
+<li>Read only <strong>Question</strong> and <strong>Function</strong>.</li>
+<li>Answer aloud or in your mind in about <strong>20–35 seconds</strong>.</li>
+<li>Rebuild the meaning. Do not recite word for word.</li>
+<li>Tap <strong>Answer</strong> only after trying.</li>
+<li>Check missing parts, close the answer, then rebuild once.</li>
+</ol>
+<p>Design note: Function is kept because it is the shortest useful cue for reconstructing the answer logic.</p></div>
+</details>
+<main id="cards"><section class="module-section timeline-section" data-module-section="timeline" data-part-section="timeline" id="module-timeline" style="display:none;"><div class="section-heading"><h2>Timeline｜Latest first</h2><span>0 questions</span></div></section><section class="module-section review-section" data-module-section="review" data-part-section="review" id="module-review" style="display:none;"><div class="section-heading"><h2>Review｜Oldest review first</h2><span>0 questions</span></div></section><section class="module-section" data-module-section="facts" data-part-section="facts" id="facts"><div class="section-heading"><h2>Fact Bank｜Personal material</h2><span>12 facts</span></div><p class="section-intro">A compact bank of reusable personal facts. Open this mode when you want material, not when you are doing normal question reconstruction.</p><section class="fact-group" id="facts-study"><div class="fact-group-heading"><h3>Study, energy &amp; routine</h3><p>Material for study habits, daily rhythm, focus, sleep, and long-term academic goals.</p></div><details class="fact-card fact-item" data-search="reading for thinking core fact i often read nonfiction books because they help me think and solve problems. a recent example is a book about procrastination, which helped me understand the mechanism behind it. can be used for free time / reading / hobbies / self-improvement / habits / problem-solving useful chunks it helps me think. what’s been on my mind a book about procrastination the mechanism behind it">
+<summary>Reading for thinking</summary>
+<div><h4>Core fact</h4>
+<p>I often read nonfiction books because they help me think and solve problems. A recent example is a book about procrastination, which helped me understand the mechanism behind it.</p>
+<h4>Can be used for</h4>
+<p>free time / reading / hobbies / self-improvement / habits / problem-solving</p>
+<h4>Useful chunks</h4>
+<ul><li>It helps me think.</li><li>what’s been on my mind</li><li>a book about procrastination</li><li>the mechanism behind it</li></ul></div>
+</details><details class="fact-card fact-item" data-search="sleep for brain and energy core fact i usually make sure i get at least eight hours of sleep because sleep helps the brain organize and remember what i have learned. without enough sleep, i have low energy to face tasks the next day, so i make it a point to keep that habit. can be used for sleep / health / study habits / daily routine / energy / productivity / learning useful chunks at least eight hours of sleep organize and remember what we’ve learned low energy to face tasks the next day i make it a point to keep that habit.">
+<summary>Sleep for brain and energy</summary>
+<div><h4>Core fact</h4><p>I usually make sure I get at least eight hours of sleep because sleep helps the brain organize and remember what I have learned. Without enough sleep, I have low energy to face tasks the next day, so I make it a point to keep that habit.</p><h4>Can be used for</h4><p>sleep / health / study habits / daily routine / energy / productivity / learning</p><h4>Useful chunks</h4><ul><li>at least eight hours of sleep</li><li>organize and remember what we’ve learned</li><li>low energy to face tasks the next day</li><li>I make it a point to keep that habit.</li></ul></div>
+</details><details class="fact-card fact-item" data-search="planning meals &amp; calories core fact i prefer planning in advance because it helps me feel confident about following through on what i plan. for example, i plan the food i’ll eat the next day so i can control calories, because i’m trying to lose weight. can be used for planning / daily routine / food / health / weight control / self-discipline / confidence useful chunks planning in advance follow through on what i plan the food i’ll eat the next day control calories trying to lose weight stay on track">
+<summary>Planning meals &amp; calories</summary>
+<div>
+<h4>Core fact</h4>
+<p>I prefer planning in advance because it helps me feel confident about following through on what I plan. For example, I plan the food I’ll eat the next day so I can control calories, because I’m trying to lose weight.</p>
+<h4>Can be used for</h4>
+<p>planning / daily routine / food / health / weight control / self-discipline / confidence</p>
+<h4>Useful chunks</h4>
+<ul>
+<li>planning in advance</li><li>follow through on what I plan</li><li>the food I’ll eat the next day</li><li>control calories</li><li>trying to lose weight</li><li>stay on track</li>
+</ul>
+</div>
+</details><details class="fact-card fact-item" data-search="low energy &amp; eating out core fact i tend to have low energy, so i prefer eating out. if i spend too much time cooking, i will not have enough energy left for my studies. can be used for food / eating out / cooking / study / energy management / routine useful chunks i tend to have low energy. spend too much time cooking i won’t have energy left for my studies.">
+<summary>Low energy &amp; eating out</summary>
+<div><h4>Core fact</h4>
+<p>I tend to have low energy, so I prefer eating out. If I spend too much time cooking, I will not have enough energy left for my studies.</p>
+<h4>Can be used for</h4>
+<p>food / eating out / cooking / study / energy management / routine</p>
+<h4>Useful chunks</h4>
+<ul><li>I tend to have low energy.</li><li>spend too much time cooking</li><li>I won’t have energy left for my studies.</li></ul></div>
+</details><details class="fact-card fact-item" data-search="instrumental music for focus core fact i listen to instrumental music when reading because it helps me focus. can be used for music / study habits / relaxation / hobbies / concentration useful chunks instrumental music helps me focus blocks out distractions">
+<summary>Instrumental music for focus</summary>
+<div><h4>Core fact</h4>
+<p>I listen to instrumental music when reading because it helps me focus.</p>
+<h4>Can be used for</h4>
+<p>music / study habits / relaxation / hobbies / concentration</p>
+<h4>Useful chunks</h4>
+<ul><li>instrumental music</li><li>helps me focus</li><li>blocks out distractions</li></ul></div>
+</details><details class="fact-card fact-item" data-search="ielts &amp; new zealand goal core fact i am preparing for ielts because i hope to apply for a master’s degree in new zealand. i am drawn to the english-speaking environment, the beautiful scenery, and its friendly reputation. can be used for future goals / study abroad / ielts / routine change / motivation / new zealand useful chunks apply for a master’s degree in new zealand i’m drawn to... english-speaking environment beautiful scenery friendly reputation">
+<summary>IELTS &amp; New Zealand goal</summary>
+<div><h4>Core fact</h4>
+<p>I am preparing for IELTS because I hope to apply for a master’s degree in New Zealand. I am drawn to the English-speaking environment, the beautiful scenery, and its friendly reputation.</p>
+<h4>Can be used for</h4>
+<p>future goals / study abroad / IELTS / routine change / motivation / New Zealand</p>
+<h4>Useful chunks</h4>
+<ul><li>apply for a master’s degree in New Zealand</li><li>I’m drawn to...</li><li>English-speaking environment</li><li>beautiful scenery</li><li>friendly reputation</li></ul></div>
+</details></section><section class="fact-group" id="facts-people"><div class="fact-group-heading"><h3>People &amp; relationships</h3><p>Material for family, friends, personality, helping others, and social balance.</p></div><details class="fact-card fact-item" data-search="family in different cities core fact my family and i live in different cities, so we mostly keep in touch online. can be used for family / online communication / distance / relationships useful chunks live in different cities meet up in person catch up online">
+<summary>Family in different cities</summary>
+<div><h4>Core fact</h4>
+<p>My family and I live in different cities, so we mostly keep in touch online.</p>
+<h4>Can be used for</h4>
+<p>family / online communication / distance / relationships</p>
+<h4>Useful chunks</h4>
+<ul><li>live in different cities</li><li>meet up in person</li><li>catch up online</li></ul></div>
+</details><details class="fact-card fact-item" data-search="introverted personality &amp; friends core fact i am more introverted, so i need time alone to recharge. i do not meet up with friends very often, but when we do get together, we share updates and sometimes try food we want to taste. when shopping, i prefer online shopping because i can avoid some pressure from dealing with sellers. can be used for personality / free time / friends / alone time / balance / social life / shopping / communication pressure useful chunks i’m quite introverted. i enjoy the balance of time alone. i feel a bit awkward when dealing with sellers. i might not express what i truly want to buy. we often share updates on what’s been going on try some food we want to taste">
+<summary>Introverted personality &amp; friends</summary>
+<div><h4>Core fact</h4>
+<p>I am more introverted, so I need time alone to recharge. I do not meet up with friends very often, but when we do get together, we share updates and sometimes try food we want to taste. When shopping, I prefer online shopping because I can avoid some pressure from dealing with sellers.</p>
+<h4>Can be used for</h4>
+<p>personality / free time / friends / alone time / balance / social life / shopping / communication pressure</p>
+<h4>Useful chunks</h4>
+<ul><li>I’m quite introverted.</li><li>I enjoy the balance of time alone.</li><li>I feel a bit awkward when dealing with sellers.</li><li>I might not express what I truly want to buy.</li><li>we often share updates on what’s been going on</li><li>try some food we want to taste</li></ul></div>
+</details><details class="fact-card fact-item" data-search="helping with music track core fact back in school, i helped a classmate who needed the instrumental version of a song for a music competition. i tried to remove the vocals myself, then got professional help and gave her what she needed. can be used for helping someone / school memory / music / problem-solving / disappointment / reflection useful chunks back in elementary school enter a music competition instrumental version of a song remove the vocals myself got some professional help my effort wasn’t appreciated">
+<summary>Helping with music track</summary>
+<div><h4>Core fact</h4>
+<p>Back in school, I helped a classmate who needed the instrumental version of a song for a music competition. I tried to remove the vocals myself, then got professional help and gave her what she needed.</p>
+<h4>Can be used for</h4>
+<p>helping someone / school memory / music / problem-solving / disappointment / reflection</p>
+<h4>Useful chunks</h4>
+<ul><li>back in elementary school</li><li>enter a music competition</li><li>instrumental version of a song</li><li>remove the vocals myself</li><li>got some professional help</li><li>my effort wasn’t appreciated</li></ul></div>
+</details></section><section class="fact-group" id="facts-place"><div class="fact-group-heading"><h3>Place &amp; culture</h3><p>Material for hometown, local culture, food, travel, and identity.</p></div><details class="fact-card fact-item" data-search="lanzhou local drink core fact one thing i miss about my hometown is a local drink called tianpei. can be used for hometown / food / local culture / travel / memory useful chunks one thing i miss most is... a local drink called... every time i go back...">
+<summary>Lanzhou local drink</summary>
+<div><h4>Core fact</h4>
+<p>One thing I miss about my hometown is a local drink called Tianpei.</p>
+<h4>Can be used for</h4>
+<p>hometown / food / local culture / travel / memory</p>
+<h4>Useful chunks</h4>
+<ul><li>One thing I miss most is...</li><li>a local drink called...</li><li>Every time I go back...</li></ul></div>
+</details>
+<details class="fact-card fact-item" data-search="travel for food core fact i definitely enjoy travelling but i am not mainly travelling for the scenery or sights i am mostly travelling for the food so local food is a big reason i enjoy visiting different places can be used for travel food culture hometown free time preferences useful chunks i definitely enjoy travelling not travelling for the scenery not actually travelling for the sights mostly travelling for the food"><summary>Travel for food</summary>
+<div><h4>Core fact</h4>
+<p>I definitely enjoy travelling, but I am not mainly travelling for the scenery or sights. I am mostly travelling for the food, so local food is a big reason I enjoy visiting different places.</p>
+<h4>Can be used for</h4>
+<p>travel / food / culture / hometown / free time / preferences</p>
+<h4>Useful chunks</h4>
+<ul><li>I definitely enjoy travelling.</li><li>not travelling for the scenery</li><li>not actually travelling for the sights</li><li>mostly travelling for the food</li></ul></div></details>
+</section><section class="fact-group" id="facts-growth"><div class="fact-group-heading"><h3>Problems &amp; self-improvement</h3><p>Material for problems, motivation, discipline, books, and personal change.</p></div><details class="fact-card fact-item" data-search="procrastination strategy core fact procrastination is a problem i face when preparing for ielts. a nonfiction book helped me understand why it happens, and i use the ideas “don’t give in to feeling good now” and “action creates motivation.” can be used for problems / self-improvement / study / discipline / books / motivation useful chunks the urge to procrastinate don’t give in to feeling good now. i don’t need to feel motivated to act. action creates motivation that’s just an excuse">
+<summary>Procrastination strategy</summary>
+<div><h4>Core fact</h4>
+<p>Procrastination is a problem I face when preparing for IELTS. A nonfiction book helped me understand why it happens, and I use the ideas “Don’t give in to feeling good now” and “action creates motivation.”</p>
+<h4>Can be used for</h4>
+<p>problems / self-improvement / study / discipline / books / motivation</p>
+<h4>Useful chunks</h4>
+<ul><li>the urge to procrastinate</li><li>Don’t give in to feeling good now.</li><li>I don’t need to feel motivated to act.</li><li>action creates motivation</li><li>that’s just an excuse</li></ul></div>
+</details></section></section>
+<section class="module-section" data-module-section="daily" data-part-section="part1" id="module-daily">
+<div class="section-heading">
+<h2>Part 1｜Daily life &amp; routine</h2>
+<span>8 questions</span>
+</div>
+<article class="card question-card" data-part="part1" data-search="part1 free time &amp; reading 01 what do you usually do in your free time? habit → reason → flexible choice → recent example → result free time reading habits self-improvement problem-solving interests hobbies one thing i like to do in my free time is read, because it helps me think. the book i pick is based on what’s been on my mind. recently, i read a book about procrastination. after finishing it, i felt more confident because i understood the mechanism behind it. one thing i like to do in my free time is... it helps me think. what’s been on my mind recently, i read a book about... after finishing it, i felt... the mechanism behind it core" data-source-no="01" data-source-seq="1" data-trained-at="2026-06-05T23:11:23" id="q-01">
+<div class="card-top">
+<div class="title-block">
+<div class="meta-row">
+<span class="value-badge core" title="high-reuse base topic">Core</span>
+<span class="time-badge">2026/6/5</span></div>
+<h2>Free time &amp; reading</h2>
+</div>
+</div>
+<section class="prompt-block">
+<h3>Question</h3>
+<p>What do you usually do in your free time?</p>
+</section>
+<section class="function-block">
+<h3>Function</h3>
+<p>habit → reason → flexible choice → recent example → result</p>
+</section>
+<details class="answer-block">
+<summary><span>Answer</span></summary>
+<div class="answer-content"><h4>Final answer</h4><p>One thing I like to do in my free time is read, because it helps me think. The book I pick is based on what’s been on my mind. Recently, I read a book about procrastination. After finishing it, I felt more confident because I understood the mechanism behind it.</p><h4>Reusable chunks</h4><ul><li>One thing I like to do in my free time is...</li><li>It helps me think.</li><li>what’s been on my mind</li><li>Recently, I read a book about...</li><li>After finishing it, I felt...</li><li>the mechanism behind it</li></ul></div>
+</details>
+</article><article class="card question-card" data-part="part1" data-search='part1 sleep &amp; energy do you usually get enough sleep? direct answer → reason → consequence → personal habit sleep eight hours brain organize remember learned low energy face tasks next day habit routine i usually make sure i get at least eight hours of sleep because i know it’s important for our brain to organize and remember what we’ve learned. without enough sleep, we have low energy to face tasks the next day, so i make it a point to keep that habit. i always make sure to maintain that routine. i make it a point to keep that habit. "make it a point" is a natural, spoken expression that emphasizes intention, and "habit" is a simple, reusable word for routines. i usually make sure i get at least eight hours of sleep. it’s important for our brain to organize and remember what we’ve learned without enough sleep, we have low energy to face tasks the next day. i make it a point to keep that habit. general facts use the present simple core' data-source-seq="1" data-trained-at="2026-06-13T23:10:15" id="q-sleep"><div class="card-top"><div class="title-block"><div class="meta-row"><span class="value-badge core" title="high-reuse health/routine topic">Core</span><span class="time-badge">2026/6/13</span></div><h2>Sleep &amp; energy</h2></div></div><section class="prompt-block"><h3>Question</h3><p>Do you usually get enough sleep?</p></section><section class="function-block"><h3>Function</h3><p>direct answer → reason → consequence → personal habit</p></section><details class="answer-block"><summary><span>Answer</span></summary><div class="answer-content"><h4>Final answer</h4><p>I usually make sure I get at least eight hours of sleep because I know it’s important for our brain to organize and remember what we’ve learned. Without enough sleep, we have low energy to face tasks the next day, so I make it a point to keep that habit.</p><h4>Alternative</h4><p>Old: I always make sure to maintain that routine.</p><p>New: I make it a point to keep that habit.</p><p>Why: "Make it a point" is a natural, spoken expression that emphasizes intention, and "habit" is a simple, reusable word for routines.</p><h4>Reusable chunks</h4><ul><li>I usually make sure I get at least eight hours of sleep.</li><li>it’s important for our brain to organize and remember what we’ve learned</li><li>Without enough sleep, we have low energy to face tasks the next day.</li><li>I make it a point to keep that habit.</li><li>general facts use the present simple</li></ul></div></details></article><article class="card question-card" data-part="part1" data-search="part1 planning &amp; weight control do you prefer to make plans in advance or be spontaneous? why? preference → reason → practical example → possible result planning plans in advance spontaneous calories food weight lose weight confidence follow through routine health i prefer planning in advance; otherwise, i lose confidence in following through on what i plan. for example, i plan the food i’ll eat the next day so i can control calories. if i don’t plan, my weight could go up, and i’m trying to lose weight. because if i don’t, i feel less confident about doing what i intend. otherwise, i lose confidence in following through on what i plan. it’s more direct and conversational, keeping the tone natural while showing a cause-effect flow. i prefer planning in advance. otherwise, i lose confidence in following through on what i plan. i plan the food i’ll eat the next day. so i can control calories. my weight could go up i’m trying to lose weight. core" data-source-seq="15" data-trained-at="2026-06-12T22:35:43" id="q-planning-weight-control">
+<div class="card-top">
+<div class="title-block">
+<div class="meta-row">
+<span class="value-badge core" title="high-reuse base topic">Core</span>
+<span class="time-badge">2026/6/12</span>
+</div>
+<h2>Planning &amp; weight control</h2>
+</div>
+</div>
+<section class="prompt-block">
+<h3>Question</h3>
+<p>Do you prefer to make plans in advance or be spontaneous? Why?</p>
+</section>
+<section class="function-block">
+<h3>Function</h3>
+<p>preference → reason → practical example → possible result</p>
+</section>
+<details class="answer-block">
+<summary><span>Answer</span></summary>
+<div class="answer-content">
+<h4>Final answer</h4>
+<p>I prefer planning in advance; otherwise, I lose confidence in following through on what I plan. For example, I plan the food I’ll eat the next day so I can control calories. If I don’t plan, my weight could go up, and I’m trying to lose weight.</p>
+<h4>Alternative</h4>
+<p>Old: because if I don’t, I feel less confident about doing what I intend.<br/>New: otherwise, I lose confidence in following through on what I plan.<br/>Why: It’s more direct and conversational, keeping the tone natural while showing a cause-effect flow.</p>
+<h4>Reusable chunks</h4>
+<ul>
+<li>I prefer planning in advance.</li><li>otherwise, I lose confidence in following through on what I plan.</li><li>I plan the food I’ll eat the next day.</li><li>so I can control calories.</li><li>my weight could go up</li><li>I’m trying to lose weight.</li>
+</ul>
+</div>
+</details>
+</article><article class="card question-card" data-part="part1" data-search="part1 eating out home cooking low energy studies routine preference result" data-source-seq="2" data-trained-at="2026-06-05T23:11:23" id="q-eating-out"><div class="card-top"><div class="title-block"><div class="meta-row"><span class="value-badge core" title="high-reuse daily routine topic">Core</span><span class="time-badge">2026/6/5</span></div><h2>Eating out &amp; low energy</h2></div></div><section class="prompt-block"><h3>Question</h3><p>Do you prefer eating at home or eating out? Why?</p></section><section class="function-block"><h3>Function</h3><p>preference → personal reason → result</p></section><details class="answer-block"><summary><span>Answer</span></summary><div class="answer-content"><h4>Final answer</h4><p>I prefer eating out because I tend to have low energy. If I spend too much time cooking, there won’t be energy left for my studies.</p><h4>Best alternative</h4><p>Old: I’m a low-energy person.</p><p>New: I tend to have low energy.</p><p>Why: This is more flexible and avoids the awkward label-like phrasing.</p><h4>Reusable chunks</h4><ul><li>I prefer eating out because...</li><li>I tend to have low energy.</li><li>If I spend too much time cooking...</li><li>there won’t be energy left for my studies</li></ul></div></details></article><article class="card question-card" data-part="part1" data-search="part1 online shopping &amp; sellers shopping online stores preference do you prefer shopping online or in stores? preference → personal reason → communication pressure → possible result introverted awkward dealing with sellers communication pressure express truly want to buy i prefer shopping online because i’m quite an introverted person. i feel a bit awkward when dealing with sellers, and i might not express what i truly want to buy. i'm a bit shy when talking to sellers. i feel a bit awkward dealing with sellers. i prefer shopping online because... i’m quite an introverted person. i feel a bit awkward when dealing with sellers. i might not express what i truly want to buy. what i truly want to buy core" data-source-seq="13" data-trained-at="2026-06-14T21:58:32" id="q-online-shopping-sellers"><div class="card-top"><div class="title-block"><div class="meta-row"><span class="value-badge core" title="high-reuse daily life topic">Core</span><span class="time-badge">2026/6/14</span></div><h2>Online shopping &amp; sellers</h2></div></div><section class="prompt-block"><h3>Question</h3><p>Do you prefer shopping online or in stores?</p></section><section class="function-block"><h3>Function</h3><p>preference → personal reason → communication pressure → possible result</p></section><details class="answer-block"><summary><span>Answer</span></summary><div class="answer-content"><h4>Final answer</h4><p>I prefer shopping online because I’m quite an introverted person. I feel a bit awkward when dealing with sellers, and I might not express what I truly want to buy.</p><h4>Alternative</h4><p>Old: I'm a bit shy when talking to sellers.</p><p>New: I feel a bit awkward dealing with sellers.</p><p>Why: "Feel awkward dealing with" is natural, and it expresses the discomfort smoothly in everyday conversation.</p><h4>Reusable chunks</h4><ul><li>I prefer shopping online because...</li><li>I’m quite an introverted person.</li><li>I feel a bit awkward when dealing with sellers.</li><li>I might not express what I truly want to buy.</li><li>what I truly want to buy</li></ul></div></details></article><article class="card question-card" data-part="part1" data-search="part1 daily routine changed recently reading think apply master degree new zealand ielts study focus" data-source-seq="3" data-trained-at="2026-06-05T23:11:23" id="q-routine-change"><div class="card-top"><div class="title-block"><div class="meta-row"><span class="value-badge flex" title="transferable routine/study topic">Flex</span><span class="time-badge">2026/6/5</span></div><h2>Routine change &amp; IELTS focus</h2></div></div><section class="prompt-block"><h3>Question</h3><p>Has your daily routine changed recently?</p></section><section class="function-block"><h3>Function</h3><p>old routine → reason for change → new focus</p></section><details class="answer-block"><summary><span>Answer</span></summary><div class="answer-content"><h4>Final answer</h4><p>One thing I usually do in my free time is read because it helps me think. However, since I hope to apply for a master’s degree in New Zealand, I’ve had to adjust that routine to focus on studying for IELTS.</p><h4>Reusable chunks</h4><ul><li>One thing I usually do in my free time is...</li><li>it helps me think</li><li>since I hope to apply for...</li><li>I’ve had to adjust that routine</li><li>focus on studying for IELTS</li></ul></div></details></article>
+<article class="card question-card" data-part="part1" data-search="part1 music &amp; focus 06 what kind of music do you usually listen to, and why do you like it? preference → reason → situation → example music reading focus hobbies relaxation study habits genshin impact i usually listen to instrumental music, like piano or other soothing instruments. especially when i’m reading, it helps me focus and blocks out distractions. i particularly enjoy the piano tracks from genshin impact; they’re really calming. old: it helps me concentrate and keeps distractions away.
+new: it helps me focus and blocks out distractions.
+why: “blocks out distractions” is a natural phrase for avoiding noise or interruptions. instrumental music piano or other soothing instruments especially when i’m... it helps me focus blocks out distractions i particularly enjoy... really calming flex" data-source-no="06" id="q-06">
+<div class="card-top">
+<div class="title-block">
+<div class="meta-row">
+<span class="value-badge flex" title="transferable support topic">Flex</span>
+</div>
+<h2>Music &amp; focus</h2>
+</div>
+</div>
+<section class="prompt-block">
+<h3>Question</h3>
+<p>What kind of music do you usually listen to, and why do you like it?</p>
+</section>
+<section class="function-block">
+<h3>Function</h3>
+<p>preference → reason → situation → example</p>
+</section>
+<details class="answer-block">
+<summary><span>Answer</span></summary>
+<div class="answer-content"><h4>Final answer</h4><p>I usually listen to instrumental music, like piano or other soothing instruments. Especially when I’m reading, it helps me focus and blocks out distractions. I particularly enjoy the piano tracks from Genshin Impact; they’re really calming.</p><h4>Best alternative</h4><p>Old: It helps me concentrate and keeps distractions away.</p><p>New: It helps me focus and blocks out distractions.</p><p>Why: “blocks out distractions” is a natural phrase for avoiding noise or interruptions.</p><h4>Reusable chunks</h4><ul><li>instrumental music</li><li>piano or other soothing instruments</li><li>Especially when I’m...</li><li>it helps me focus</li><li>blocks out distractions</li><li>I particularly enjoy...</li><li>really calming</li></ul></div>
+</details>
+</article>
+<article class="card question-card" data-part="part1" data-search="part1 future reading choice 02 what kind of books do you think you’ll read next, and why are you interested in them? preference → flexible choice → uncertainty → likely future focus future plans reading study work practical needs nonfiction i prefer nonfiction books. the book i pick depends on what i’m thinking about that day, so it’s not easy to say. i’d probably focus on a book that helps me solve a problem i’m facing. i prefer nonfiction books. it depends on what i’m thinking about. it’s not easy to say. i’d probably focus on... a problem i’m facing flex" data-source-no="02" id="q-02">
+<div class="card-top">
+<div class="title-block">
+<div class="meta-row">
+<span class="value-badge flex" title="future/plans variant">Flex</span>
+</div>
+<h2>Future reading choice</h2>
+</div>
+</div>
+<section class="prompt-block">
+<h3>Question</h3>
+<p>What kind of books do you think you’ll read next, and why are you interested in them?</p>
+</section>
+<section class="function-block">
+<h3>Function</h3>
+<p>preference → flexible choice → uncertainty → likely future focus</p>
+</section>
+<details class="answer-block">
+<summary><span>Answer</span></summary>
+<div class="answer-content"><h4>Final answer</h4><p>I prefer nonfiction books. The book I pick depends on what I’m thinking about that day, so it’s not easy to say. I’d probably focus on a book that helps me solve a problem I’m facing.</p><h4>Reusable chunks</h4><ul><li>I prefer nonfiction books.</li><li>It depends on what I’m thinking about.</li><li>It’s not easy to say.</li><li>I’d probably focus on...</li><li>a problem I’m facing</li></ul></div>
+</details>
+</article>
+</section>
+<section class="module-section" data-module-section="people" data-part-section="part1" id="module-people">
+<div class="section-heading">
+<h2>Part 1｜People &amp; relationships</h2>
+<span>3 questions</span>
+</div>
+<article class="card question-card" data-part="part1" data-search="part1 family &amp; distance 03 do you usually spend time with your family? preference → reason → result → habit family distance online communication keeping in touch city life i do enjoy spending time with my family, but we live in different cities. so we rarely meet up in person, and we usually just catch up online. i do enjoy... spend time with my family live in different cities meet up in person catch up online core" data-source-no="03" id="q-03">
+<div class="card-top">
+<div class="title-block">
+<div class="meta-row">
+<span class="value-badge core" title="high-reuse base topic">Core</span>
+</div>
+<h2>Family &amp; distance</h2>
+</div>
+</div>
+<section class="prompt-block">
+<h3>Question</h3>
+<p>Do you usually spend time with your family?</p>
+</section>
+<section class="function-block">
+<h3>Function</h3>
+<p>preference → reason → result → habit</p>
+</section>
+<details class="answer-block">
+<summary><span>Answer</span></summary>
+<div class="answer-content"><h4>Final answer</h4><p>I do enjoy spending time with my family, but we live in different cities. So we rarely meet up in person, and we usually just catch up online.</p><h4>Reusable chunks</h4><ul><li>I do enjoy...</li><li>spend time with my family</li><li>live in different cities</li><li>meet up in person</li><li>catch up online</li></ul></div>
+</details>
+</article>
+<article class="card question-card" data-part="part1" data-search="part1 alone time &amp; personality 05 do you prefer spending time alone or with other people? do you prefer spending your free time alone or with other people? balanced answer → preference → reason → clarification → personal principle alone time personality free time reading friends balance introversion i think i need both, but i do enjoy spending time on my own. i’m an introvert, so being alone helps me recharge. that doesn’t mean i don’t like seeing my friends. it’s just a balance i try to keep. i prefer spending time by myself since i’m more introverted. when i have free time, i usually pick up a nonfiction book to read. old: i prefer spending time on my own because i’m an introverted person.
+new: i prefer spending time by myself since i’m more introverted.
+why: “by myself” is smoother and widely reusable. i think i need both. i do enjoy spending time on my own. i prefer spending time by myself. since i’m more introverted being alone helps me recharge that doesn’t mean... it’s just a balance i try to keep. pick up a nonfiction book core" data-source-no="05" id="q-05">
+<div class="card-top">
+<div class="title-block">
+<div class="meta-row">
+<span class="value-badge core" title="high-reuse preference/personality topic">Core</span>
+</div>
+<h2>Alone time &amp; personality</h2>
+</div>
+</div>
+<section class="prompt-block">
+<h3>Question</h3>
+<ol><li>Do you prefer spending time alone or with other people?</li><li>Do you prefer spending your free time alone or with other people?</li></ol>
+</section>
+<section class="function-block">
+<h3>Function</h3>
+<p>balanced answer → preference → reason → clarification → personal principle</p>
+</section>
+<details class="answer-block">
+<summary><span>Answer</span></summary>
+<div class="answer-content"><h4>Balanced final answer</h4><p>I think I need both, but I do enjoy spending time on my own. I’m an introvert, so being alone helps me recharge. That doesn’t mean I don’t like seeing my friends. It’s just a balance I try to keep.</p><h4>Short final answer</h4><p>I prefer spending time by myself since I’m more introverted. When I have free time, I usually pick up a nonfiction book to read.</p><h4>Best alternative</h4><p>Old: I prefer spending time on my own because I’m an introverted person.</p><p>New: I prefer spending time by myself since I’m more introverted.</p><p>Why: “by myself” is smoother and widely reusable.</p><h4>Reusable chunks</h4><ul><li>I think I need both.</li><li>I do enjoy spending time on my own.</li><li>I prefer spending time by myself.</li><li>since I’m more introverted</li><li>being alone helps me recharge</li><li>That doesn’t mean...</li><li>It’s just a balance I try to keep.</li><li>pick up a nonfiction book</li></ul></div>
+</details>
+</article><article class="card question-card" data-part="part1" data-search="part1 friends meet up introverted balance time alone share updates what’s been going on food activities" data-source-seq="1" data-trained-at="2026-06-06T22:40:06" id="q-friends"><div class="card-top"><div class="title-block"><div class="meta-row"><span class="value-badge core" title="high-reuse friends/personality topic">Core</span><span class="time-badge">2026/6/6</span></div><h2>Friends &amp; balance</h2></div></div><section class="prompt-block"><h3>Question</h3><p>What do you usually do with your friends?</p></section><section class="function-block"><h3>Function</h3><p>frequency → balance → activities</p></section><details class="answer-block"><summary><span>Answer</span></summary><div class="answer-content"><h4>Final answer</h4><p>I don’t meet up with my friends that often. I enjoy the balance of time alone, but when we do get together, we often share updates on what’s been going on, and sometimes we try some food we want to taste.</p><h4>Best alternative</h4><p>Old: We usually catch up on what we’ve been doing recently.</p><p>New: We often share updates on what’s been going on.</p><p>Why: It sounds concise and natural for spoken English.</p><h4>Reusable chunks</h4><ul><li>I don’t meet up with my friends that often.</li><li>I enjoy the balance of time alone.</li><li>when we do get together</li><li>share updates on what’s been going on</li><li>try some food we want to taste</li></ul></div></details></article>
+</section>
+<section class="module-section" data-module-section="hometown" data-part-section="part1" id="module-hometown">
+<div class="section-heading">
+<h2>Part 1｜Hometown &amp; culture</h2>
+<span>2 questions</span>
+</div>
+<article class="card question-card" data-part="part1" data-search="part1 hometown &amp; local food 04 do you like your hometown? preference → reason → example → local fact → repeated habit hometown food local culture travel memory lanzhou home i really like my hometown, mainly because of the food. one thing i miss most is a local drink called tianpei. it’s really famous in lanzhou. every time i go back, i have it almost every day. i really like..., mainly because of... one thing i miss most is... a local drink called... it’s really famous in... every time i go back, i... core" data-source-no="04" id="q-04">
+<div class="card-top">
+<div class="title-block">
+<div class="meta-row">
+<span class="value-badge core" title="high-reuse home/culture topic">Core</span>
+</div>
+<h2>Hometown &amp; local food</h2>
+</div>
+</div>
+<section class="prompt-block">
+<h3>Question</h3>
+<p>Do you like your hometown?</p>
+</section>
+<section class="function-block">
+<h3>Function</h3>
+<p>preference → reason → example → local fact → repeated habit</p>
+</section>
+<details class="answer-block">
+<summary><span>Answer</span></summary>
+<div class="answer-content"><h4>Final answer</h4><p>I really like my hometown, mainly because of the food. One thing I miss most is a local drink called Tianpei. It’s really famous in Lanzhou. Every time I go back, I have it almost every day.</p><h4>Reusable chunks</h4><ul><li>I really like..., mainly because of...</li><li>One thing I miss most is...</li><li>a local drink called...</li><li>It’s really famous in...</li><li>Every time I go back, I...</li></ul></div>
+</details>
+</article>
+<article class="card question-card" data-part="part1" data-search="part1 travelling &amp; food travel travelling do you like travelling? direct answer → different reason → contrast → main interest food scenery sights travel preference i definitely enjoy travelling but my reason might be a bit different from others i'm not actually travelling for the sights i'm mostly travelling for the food i'm not really travelling for the scenery i'm not actually travelling for the sights i definitely enjoy travelling my reason might be a bit different from others not actually travelling for the sights mostly travelling for the food core" data-source-seq="14" data-trained-at="2026-06-13T23:29:06" id="q-travelling-food"><div class="card-top"><div class="title-block"><div class="meta-row"><span class="value-badge core" title="high-reuse daily life/culture topic">Core</span>
+<span class="time-badge">2026/6/13</span></div>
+<h2>Travelling &amp; food</h2></div></div>
+<section class="prompt-block"><h3>Question</h3>
+<p>Do you like travelling?</p></section>
+<section class="function-block"><h3>Function</h3>
+<p>direct answer → different reason → contrast → main interest</p></section>
+<details class="answer-block"><summary><span>Answer</span></summary>
+<div class="answer-content"><h4>Final answer</h4>
+<p>I definitely enjoy travelling, but my reason might be a bit different from others. I’m not actually travelling for the sights—I’m mostly travelling for the food.</p>
+<h4>Alternative</h4>
+<p>Old: I'm not really travelling for the scenery.</p>
+<p>New: I'm not actually travelling for the sights.</p>
+<p>Why: "Sights" is a natural synonym, and "actually" makes it sound spontaneous and conversational.</p>
+<h4>Reusable chunks</h4>
+<ul><li>I definitely enjoy travelling.</li><li>my reason might be a bit different from others.</li><li>I’m not actually travelling for the sights.</li><li>I’m mostly travelling for the food.</li><li>not for the scenery</li></ul></div></details></article>
+</section><section class="module-section" data-module-section="part2" data-part-section="part2" id="module-part2"><div class="section-heading"><h2>Part 2｜Cue cards &amp; follow-ups</h2><span>2 questions</span></div><article class="card question-card" data-part="part2" data-search="part2 part 2 helped someone music competition instrumental version song remove vocals professional help effort appreciated disappointment reflection" data-source-seq="1" data-trained-at="2026-06-02T09:26:19" id="q-helped-someone"><div class="card-top"><div class="title-block"><div class="meta-row"><span class="value-badge core" title="high-reuse Part 2 story topic">Core</span><span class="time-badge">2026/6/2</span></div><h2>Helped someone with music</h2></div></div><section class="prompt-block"><h3>Question</h3><p>Describe a time when you helped someone. You should say who you helped, what the problem was, how you helped, and explain how you felt.</p></section><section class="function-block"><h3>Function</h3><p>past story → problem → action → feeling/reflection</p></section><details class="answer-block"><summary><span>Answer</span></summary><div class="answer-content"><h4>Final answer</h4><p>I remember back in elementary school, a classmate told me she wanted to enter a music competition but couldn’t find the right instrumental version of a song. I tried to remove the vocals myself, but it was tough. In the end, I got some professional help and gave her what she needed. She never really shared how it turned out, and I felt a bit disappointed. I started to think my effort wasn’t appreciated, but I understood maybe it didn’t go well for her.</p><h4>Best alternative</h4><p>Old: I even felt like maybe my help didn’t matter.</p><p>New: I started to think my effort wasn’t appreciated.</p><p>Why: It expresses the feeling clearly without sounding too dramatic.</p><h4>Reusable chunks</h4><ul><li>back in elementary school</li><li>enter a music competition</li><li>couldn’t find the right instrumental version</li><li>remove the vocals myself</li><li>got some professional help</li><li>shared how it turned out</li><li>my effort wasn’t appreciated</li></ul></div></details></article><article class="card question-card" data-part="part2" data-search="part2 part 2 solved problem procrastination ielts nonfiction book mechanism urge mantra don’t give in to feeling good now action creates motivation follow-up strategy" data-source-seq="1" data-trained-at="2026-06-08T19:09:59" id="q-solved-problem"><div class="card-top"><div class="title-block"><div class="meta-row"><span class="value-badge core" title="high-reuse Part 2 problem-solving topic">Core</span><span class="time-badge">2026/6/8</span></div><h2>Solved procrastination problem</h2></div></div><section class="prompt-block"><h3>Question</h3><p>Describe a time when you solved a problem. You should say what the problem was, when it happened, how you solved it, and explain how you felt afterwards.</p></section><section class="function-block"><h3>Function</h3><p>problem → context → feeling → solution → result</p></section><details class="answer-block"><summary><span>Answer</span></summary><div class="answer-content"><h4>Final answer</h4><p>One problem I’ve faced daily is procrastination. It happened often, especially when I was preparing for IELTS. It used to frustrate me, but after reading a nonfiction book about it, I understood why it happens. Now, whenever I feel the urge to procrastinate, I recall a mantra from that book: “Don’t give in to feeling good now.” That mindset has been really helpful for me.</p><h4>Reusable chunks</h4><ul><li>One problem I’ve faced daily is...</li><li>It happened often, especially when...</li><li>It used to frustrate me.</li><li>I understood why it happens.</li><li>whenever I feel the urge to...</li><li>Don’t give in to feeling good now.</li></ul></div></details><section class="followup-block"><div class="followup-label">Follow-up</div><section class="prompt-block"><h3>Follow-up Question</h3><p>What other strategies have you found useful in overcoming procrastination?</p></section><section class="function-block"><h3>Function</h3><p>extra strategy → principle → personal application → result</p></section><details class="answer-block followup-answer-block"><summary><span>Answer</span></summary><div class="answer-content"><h4>Final answer</h4><p>Another strategy I learned from that book is that I don’t need to feel motivated to act, because action creates motivation. Whenever I think I lack motivation, I remind myself that’s just an excuse. Once I start doing the task, my motivation follows. I’ve found that very useful when preparing for IELTS.</p><h4>Reusable chunks</h4><ul><li>I don’t need to feel motivated to act.</li><li>action creates motivation</li><li>that’s just an excuse</li><li>Once I start doing the task...</li><li>my motivation follows</li></ul></div></details></section></article></section>
+<div class="empty" id="empty">No matching questions.</div>
+</main>
+<p class="footer-note">Single-file local HTML. No network required.</p>
+</div>
+<button aria-label="Scroll to top" class="floating-top" id="floatingTopBtn" title="Scroll to top" type="button"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M6 14.5L12 8.5L18 14.5"></path></svg></button>
+<script>
+(function() {
+  const search = document.getElementById('search');
+  const cards = Array.from(document.querySelectorAll('.question-card'));
+  const factCards = Array.from(document.querySelectorAll('.fact-card'));
+  const allModuleSections = Array.from(document.querySelectorAll('[data-module-section]'));
+  const timelineSection = document.getElementById('module-timeline');
+  const reviewSection = document.getElementById('module-review');
+  const moduleSections = allModuleSections.filter(sec => sec.id !== 'module-timeline' && sec.id !== 'module-review');
+  const status = document.getElementById('status');
+  const empty = document.getElementById('empty');
+  const themeToggle = document.getElementById('themeToggle');
+  const timelineBtn = document.getElementById('timelineBtn');
+  const reviewBtn = document.getElementById('reviewBtn');
+  const saveHtmlBtn = document.getElementById('saveHtmlBtn');
+  const floatingTopBtn = document.getElementById('floatingTopBtn');
+  const partFilters = Array.from(document.querySelectorAll('.part-filter'));
+  const moduleLinks = Array.from(document.querySelectorAll('.module-jump .jump-link'));
+  let timelineMode = false;
+  let reviewMode = false;
+  let activePart = 'all';
+  let hasUnsavedReviewChanges = false;
+
+  cards.forEach((card, index) => {
+    if (!card.dataset.defaultIndex) card.dataset.defaultIndex = String(index + 1);
+    if (!card.dataset.homeSection && card.parentElement) card.dataset.homeSection = card.parentElement.id || '';
+  });
+
+  function updateFloatingTop() {
+    if (!floatingTopBtn) return;
+    floatingTopBtn.classList.toggle('visible', window.scrollY > 360);
+  }
+
+  function partLabel(part) {
+    if (part === 'part1') return 'Part 1';
+    if (part === 'part2') return 'Part 2';
+    if (part === 'part3') return 'Part 3';
+    if (part === 'facts') return 'Fact Bank';
+    return 'All';
+  }
+
+  function matchesPart(card) {
+    return activePart === 'all' || card.dataset.part === activePart;
+  }
+
+  function totalForActivePart() {
+    if (activePart === 'facts') return factCards.length;
+    return cards.filter(matchesPart).length;
+  }
+
+  function visibleCards() { return cards.filter(card => card.style.display !== 'none'); }
+  function visibleFactCards() { return factCards.filter(card => card.style.display !== 'none'); }
+
+  function formatDate(iso) {
+    if (!iso) return '';
+    const date = new Date(iso);
+    if (Number.isNaN(date.getTime())) return '';
+    return `${date.getMonth() + 1}/${date.getDate()}`;
+  }
+
+  function updateReviewBadge(card) {
+    const badge = card.querySelector('.review-date-badge');
+    if (!badge) return;
+    const reviewedAt = card.dataset.reviewedAt || '';
+    badge.textContent = reviewedAt ? `Reviewed ${formatDate(reviewedAt)}` : 'Not reviewed yet';
+  }
+
+  function updateSaveButton() {
+    if (!saveHtmlBtn) return;
+    saveHtmlBtn.textContent = hasUnsavedReviewChanges ? 'Save HTML*' : 'Save HTML';
+    saveHtmlBtn.classList.toggle('unsaved', hasUnsavedReviewChanges);
+    saveHtmlBtn.setAttribute('aria-label', hasUnsavedReviewChanges ? 'Save updated HTML with review changes' : 'Save current HTML');
+  }
+
+  function markReviewChanged() {
+    hasUnsavedReviewChanges = true;
+    updateSaveButton();
+  }
+
+  function markReviewed(card) {
+    card.dataset.reviewedAt = new Date().toISOString();
+    updateReviewBadge(card);
+    markReviewChanged();
+    if (reviewMode) {
+      moveToReview();
+      applySearch();
+    }
+  }
+
+  function initReviewControls() {
+    cards.forEach(card => {
+      const top = card.querySelector('.card-top');
+      if (!top || top.querySelector('.review-actions')) {
+        updateReviewBadge(card);
+        return;
+      }
+      const wrap = document.createElement('div');
+      wrap.className = 'review-actions';
+
+      const badge = document.createElement('span');
+      badge.className = 'review-date-badge';
+
+      const btn = document.createElement('button');
+      btn.className = 'review-btn';
+      btn.type = 'button';
+      btn.textContent = 'Reviewed';
+      btn.title = 'Mark this card as reviewed now';
+      btn.setAttribute('aria-label', 'Mark this card as reviewed now');
+      btn.addEventListener('click', event => {
+        event.preventDefault();
+        event.stopPropagation();
+        markReviewed(card);
+      });
+
+      wrap.appendChild(badge);
+      wrap.appendChild(btn);
+      top.appendChild(wrap);
+      updateReviewBadge(card);
+    });
+  }
+
+  function refreshStatus(count) {
+    const total = totalForActivePart();
+    if (activePart === 'facts') {
+      status.textContent = `Showing ${count} / ${total} facts`;
+      return;
+    }
+    const part = activePart === 'all' ? 'questions' : `${partLabel(activePart)} questions`;
+    const suffix = timelineMode ? ' · latest first' : (reviewMode ? ' · review order' : '');
+    status.textContent = `Showing ${count} / ${total} ${part}${suffix}`;
+    if (timelineMode && timelineSection) {
+      const span = timelineSection.querySelector('.section-heading span');
+      if (span) span.textContent = `${count} question${count === 1 ? '' : 's'}`;
+    }
+    if (reviewMode && reviewSection) {
+      const span = reviewSection.querySelector('.section-heading span');
+      if (span) span.textContent = `${count} question${count === 1 ? '' : 's'}`;
+    }
+  }
+
+  function updatePartNav() {
+    partFilters.forEach(btn => btn.classList.toggle('active', btn.dataset.partFilter === activePart));
+    moduleLinks.forEach(link => {
+      const target = link.dataset.partTarget || '';
+      let show = false;
+      if (!timelineMode && !reviewMode) {
+        if (activePart === 'facts') show = target === 'facts';
+        else if (activePart === 'all') show = target && target !== 'facts';
+        else show = target === activePart;
+      }
+      link.style.display = show ? '' : 'none';
+    });
+  }
+
+  function datedFirstNewest(a, b) {
+    const ad = a.dataset.trainedAt || '';
+    const bd = b.dataset.trainedAt || '';
+    if (ad && !bd) return -1;
+    if (!ad && bd) return 1;
+    if (ad && bd && ad !== bd) return bd.localeCompare(ad); // newest first
+    const as = Number(a.dataset.sourceSeq || 9999);
+    const bs = Number(b.dataset.sourceSeq || 9999);
+    if (as !== bs) return as - bs;
+    return Number(a.dataset.defaultIndex || 0) - Number(b.dataset.defaultIndex || 0);
+  }
+
+  function reviewOldestFirst(a, b) {
+    const ar = a.dataset.reviewedAt || '';
+    const br = b.dataset.reviewedAt || '';
+    if (!ar && br) return -1;
+    if (ar && !br) return 1;
+    if (ar && br && ar !== br) return ar.localeCompare(br); // oldest reviewed first
+    return Number(a.dataset.defaultIndex || 0) - Number(b.dataset.defaultIndex || 0);
+  }
+
+  function restoreDefaultOrder() {
+    const byHome = {};
+    cards.forEach(card => {
+      const homeId = card.dataset.homeSection;
+      if (!homeId) return;
+      if (!byHome[homeId]) byHome[homeId] = [];
+      byHome[homeId].push(card);
+    });
+    Object.entries(byHome).forEach(([homeId, list]) => {
+      const home = document.getElementById(homeId);
+      if (!home) return;
+      list.sort((a, b) => Number(a.dataset.defaultIndex || 0) - Number(b.dataset.defaultIndex || 0));
+      list.forEach(card => home.appendChild(card));
+    });
+  }
+
+  function moveToTimeline() {
+    if (!timelineSection) return;
+    const sorted = cards.slice().sort(datedFirstNewest);
+    sorted.forEach(card => timelineSection.appendChild(card));
+  }
+
+  function moveToReview() {
+    if (!reviewSection) return;
+    const sorted = cards.slice().sort(reviewOldestFirst);
+    sorted.forEach(card => reviewSection.appendChild(card));
+  }
+
+  function applySearch() {
+    const q = search.value.trim().toLowerCase();
+
+    if (activePart === 'facts') {
+      let factCount = 0;
+      cards.forEach(card => card.style.display = 'none');
+      if (timelineSection) timelineSection.style.display = 'none';
+      if (reviewSection) reviewSection.style.display = 'none';
+      moduleSections.forEach(sec => {
+        if (sec.id !== 'facts') sec.style.display = 'none';
+      });
+      factCards.forEach(card => {
+        const text = (card.dataset.search || card.textContent || '').toLowerCase();
+        const match = !q || text.includes(q);
+        card.style.display = match ? '' : 'none';
+        if (match) factCount++;
+      });
+      document.querySelectorAll('.fact-group').forEach(group => {
+        const any = Array.from(group.querySelectorAll('.fact-card')).some(card => card.style.display !== 'none');
+        group.style.display = any ? '' : 'none';
+      });
+      const facts = document.getElementById('facts');
+      if (facts) facts.style.display = factCount ? '' : 'none';
+      empty.style.display = factCount ? 'none' : 'block';
+      updatePartNav();
+      refreshStatus(factCount);
+      return;
+    }
+
+    let count = 0;
+    factCards.forEach(card => card.style.display = '');
+    document.querySelectorAll('.fact-group').forEach(group => group.style.display = '');
+    cards.forEach(card => {
+      const text = (card.dataset.search || '').toLowerCase();
+      const searchMatch = !q || text.includes(q);
+      const partMatch = matchesPart(card);
+      const match = searchMatch && partMatch;
+      card.style.display = match ? '' : 'none';
+      if (match) count++;
+    });
+
+    if (timelineMode) {
+      moduleSections.forEach(sec => sec.style.display = 'none');
+      if (reviewSection) reviewSection.style.display = 'none';
+      if (timelineSection) timelineSection.style.display = count ? '' : 'none';
+    } else if (reviewMode) {
+      moduleSections.forEach(sec => sec.style.display = 'none');
+      if (timelineSection) timelineSection.style.display = 'none';
+      if (reviewSection) reviewSection.style.display = count ? '' : 'none';
+    } else {
+      if (timelineSection) timelineSection.style.display = 'none';
+      if (reviewSection) reviewSection.style.display = 'none';
+      moduleSections.forEach(sec => {
+        const sectionPart = sec.dataset.partSection || '';
+        const partAllowed = activePart === 'all' ? sectionPart !== 'facts' : sectionPart === activePart;
+        const any = Array.from(sec.querySelectorAll('.question-card')).some(card => card.style.display !== 'none');
+        sec.style.display = (partAllowed && any) ? '' : 'none';
+      });
+    }
+
+    empty.style.display = count ? 'none' : 'block';
+    updatePartNav();
+    refreshStatus(count);
+  }
+
+  function setActivePart(part) {
+    if (part === 'facts') {
+      if (timelineMode) setTimelineMode(false);
+      if (reviewMode) setReviewMode(false);
+    }
+    activePart = part;
+    applySearch();
+  }
+
+  function collapseAnswers() {
+    document.querySelectorAll('details.answer-block, details.fact-card').forEach(d => d.open = false);
+  }
+
+  function updateTimelineButton() {
+    if (!timelineBtn) return;
+    timelineBtn.textContent = timelineMode ? 'Default' : 'Timeline';
+    timelineBtn.classList.toggle('timeline-active', timelineMode);
+    timelineBtn.setAttribute('aria-pressed', timelineMode ? 'true' : 'false');
+  }
+
+  function updateReviewButton() {
+    if (!reviewBtn) return;
+    reviewBtn.textContent = reviewMode ? 'Default' : 'Review';
+    reviewBtn.classList.toggle('review-active', reviewMode);
+    reviewBtn.setAttribute('aria-pressed', reviewMode ? 'true' : 'false');
+  }
+
+  function setTimelineMode(on) {
+    if (on && activePart === 'facts') activePart = 'all';
+    if (on && reviewMode) {
+      reviewMode = false;
+      document.body.classList.remove('review-mode');
+      updateReviewButton();
+    }
+    timelineMode = on;
+    document.body.classList.toggle('timeline-mode', timelineMode);
+    updateTimelineButton();
+    if (timelineMode) moveToTimeline(); else restoreDefaultOrder();
+    applySearch();
+  }
+
+  function setReviewMode(on) {
+    if (on && activePart === 'facts') activePart = 'all';
+    if (on && timelineMode) {
+      timelineMode = false;
+      document.body.classList.remove('timeline-mode');
+      updateTimelineButton();
+    }
+    reviewMode = on;
+    document.body.classList.toggle('review-mode', reviewMode);
+    updateReviewButton();
+    if (reviewMode) moveToReview(); else restoreDefaultOrder();
+    applySearch();
+  }
+
+  function updateThemeButton() {
+    const dark = document.documentElement.dataset.theme === 'dark';
+    themeToggle.textContent = dark ? '☀︎' : '☾';
+    themeToggle.setAttribute('aria-label', dark ? 'Switch to day mode' : 'Switch to night mode');
+    themeToggle.setAttribute('title', dark ? 'Day mode' : 'Night mode');
+  }
+
+  function setTheme(theme) {
+    if (theme === 'dark') {
+      document.documentElement.dataset.theme = 'dark';
+    } else {
+      delete document.documentElement.dataset.theme;
+    }
+    try { localStorage.setItem('ielts-trainer-theme', theme); } catch(e) {}
+    updateThemeButton();
+  }
+
+  function resetCloneButton(button, text) {
+    if (!button) return;
+    button.textContent = text;
+    button.classList.remove('timeline-active', 'review-active', 'unsaved');
+    button.setAttribute('aria-pressed', 'false');
+  }
+
+  function cleanStyle(el) {
+    if (!el) return;
+    el.style.display = '';
+    if (!el.getAttribute('style')) el.removeAttribute('style');
+  }
+
+  function buildExportName() {
+    const date = new Date();
+    const pad = n => String(n).padStart(2, '0');
+    const stamp = `${date.getFullYear()}${pad(date.getMonth() + 1)}${pad(date.getDate())}_${pad(date.getHours())}${pad(date.getMinutes())}`;
+    return `IELTS_Speaking_Reconstruction_Trainer_v23_1_review_badges_${stamp}.html`;
+  }
+
+  function prepareCloneForExport(clone) {
+    const cloneBody = clone.querySelector('body');
+    if (cloneBody) cloneBody.classList.remove('timeline-mode', 'review-mode');
+
+    clone.querySelectorAll('.review-actions').forEach(el => el.remove());
+    clone.querySelectorAll('.highlight, .flash').forEach(el => el.classList.remove('highlight', 'flash'));
+    clone.querySelectorAll('details[open]').forEach(el => el.removeAttribute('open'));
+
+    const cloneCards = Array.from(clone.querySelectorAll('.question-card'));
+    const byHome = {};
+    cloneCards.forEach(card => {
+      const homeId = card.dataset.homeSection || '';
+      if (!homeId) return;
+      if (!byHome[homeId]) byHome[homeId] = [];
+      byHome[homeId].push(card);
+    });
+    Object.entries(byHome).forEach(([homeId, list]) => {
+      const home = clone.querySelector(`#${CSS.escape(homeId)}`);
+      if (!home) return;
+      list.sort((a, b) => Number(a.dataset.defaultIndex || 0) - Number(b.dataset.defaultIndex || 0));
+      list.forEach(card => home.appendChild(card));
+    });
+
+    cloneCards.forEach(card => {
+      card.removeAttribute('data-default-index');
+      card.removeAttribute('data-home-section');
+      cleanStyle(card);
+    });
+
+    clone.querySelectorAll('.fact-card, .fact-group, .jump-link').forEach(cleanStyle);
+    clone.querySelectorAll('.module-section').forEach(sec => {
+      cleanStyle(sec);
+      if (sec.id === 'module-timeline' || sec.id === 'module-review') {
+        sec.setAttribute('style', 'display:none;');
+      }
+    });
+
+    resetCloneButton(clone.querySelector('#timelineBtn'), 'Timeline');
+    resetCloneButton(clone.querySelector('#reviewBtn'), 'Review');
+    const saveBtn = clone.querySelector('#saveHtmlBtn');
+    if (saveBtn) {
+      saveBtn.textContent = 'Save HTML';
+      saveBtn.classList.remove('unsaved');
+      saveBtn.setAttribute('aria-label', 'Save current HTML');
+    }
+
+    const statusClone = clone.querySelector('#status');
+    if (statusClone) {
+      const total = cloneCards.length;
+      statusClone.textContent = `Showing ${total} / ${total} questions`;
+    }
+  }
+
+  function saveCurrentHtml() {
+    const clone = document.documentElement.cloneNode(true);
+    prepareCloneForExport(clone);
+    const html = '<!DOCTYPE html>\n' + clone.outerHTML;
+    const blob = new Blob([html], { type: 'text/html;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = buildExportName();
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 1200);
+    hasUnsavedReviewChanges = false;
+    updateSaveButton();
+  }
+
+  search.addEventListener('input', applySearch);
+  partFilters.forEach(btn => btn.addEventListener('click', () => setActivePart(btn.dataset.partFilter)));
+  document.getElementById('collapseBtn').addEventListener('click', collapseAnswers);
+  document.getElementById('expandBtn').addEventListener('click', () => {
+    if (activePart === 'facts') visibleFactCards().forEach(d => d.open = true);
+    else visibleCards().forEach(card => card.querySelectorAll('details.answer-block').forEach(d => d.open = true));
+  });
+  document.getElementById('resetBtn').addEventListener('click', () => {
+    search.value = '';
+    collapseAnswers();
+    document.querySelectorAll('details.info-details, details.fact-card').forEach(d => d.open = false);
+    setActivePart('all');
+    setTimelineMode(false);
+    setReviewMode(false);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+  if (timelineBtn) {
+    timelineBtn.addEventListener('click', () => setTimelineMode(!timelineMode));
+  }
+  if (reviewBtn) {
+    reviewBtn.addEventListener('click', () => setReviewMode(!reviewMode));
+  }
+  if (saveHtmlBtn) {
+    saveHtmlBtn.addEventListener('click', saveCurrentHtml);
+  }
+  document.getElementById('randomBtn').addEventListener('click', () => {
+    const list = activePart === 'facts' ? visibleFactCards() : visibleCards();
+    if (!list.length) return;
+    collapseAnswers();
+    const card = list[Math.floor(Math.random() * list.length)];
+    card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    card.classList.add('flash');
+    setTimeout(() => card.classList.remove('flash'), 900);
+  });
+
+  if (floatingTopBtn) {
+    floatingTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+    window.addEventListener('scroll', updateFloatingTop, { passive: true });
+    updateFloatingTop();
+  }
+
+  themeToggle.addEventListener('click', () => {
+    const dark = document.documentElement.dataset.theme === 'dark';
+    setTheme(dark ? 'light' : 'dark');
+  });
+  try {
+    const savedTheme = localStorage.getItem('ielts-trainer-theme');
+    if (savedTheme === 'dark') setTheme('dark'); else updateThemeButton();
+  } catch(e) { updateThemeButton(); }
+  initReviewControls();
+  updateTimelineButton();
+  updateReviewButton();
+  updateSaveButton();
+  restoreDefaultOrder();
+  applySearch();
+})();
+</script>
+</body>
+</html>
